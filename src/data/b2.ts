@@ -91,7 +91,10 @@ export const b2Units: Unit[] = [
     accent: '#C4553A',
     lessons: [
       lesson('b2-city', 'A changing neighborhood', 'Read for what changed and who left.', [
-        read('b2-city-1', city, 'What rose along with the new cafés?', 'The rents', ['The rents', 'The number of children', 'The train times', 'The river'], ['barrio']),
+        {
+          ...read('b2-city-1', city, 'What rose along with the new cafés?', 'The rents', ['The rents', 'The number of children', 'The train times', 'The river'], ['barrio']),
+          task: 'Lectura · Texto',
+        },
         read('b2-city-2', city, 'Who can no longer stay?', 'People who had lived there since childhood', ['People who had lived there since childhood', 'The new café owners', 'Tourists', 'Nobody'], ['barrio'], 'en', 'Aunque introduces a cost next to the benefit.'),
         choice('b2-city-3', 'es-en', 'alquileres', 'rents', ['rents', 'cafés', 'children', 'trains'], ['barrio']),
         listen('b2-city-4', 'El cambio trajo vida nueva, aunque también empujó a muchas familias fuera', 'The change brought new life, though it also pushed many families out', ['The change brought new life, though it also pushed many families out', 'Nothing changed', 'Families opened the cafés', 'Rents went down'], ['barrio']),
@@ -101,7 +104,11 @@ export const b2Units: Unit[] = [
         typeIn('b2-city-8', 'es-en', 'ha cambiado', 'it has changed', ['barrio']),
       ]),
       lesson('b2-listen', 'Before Friday', 'A longer spoken request.', [
-        listen('b2-listen-1', talk, 'She does not think they have time if they wait until Monday', ['She does not think they have time if they wait until Monday', 'She knows Monday is perfect', 'She wants to cancel the plan', 'She already sent the notes'], ['dudo-que'], 'The main point is the deadline, not a single verb.'),
+        {
+          ...listen('b2-listen-1', talk, 'She does not think they have time if they wait until Monday', ['She does not think they have time if they wait until Monday', 'She knows Monday is perfect', 'She wants to cancel the plan', 'She already sent the notes'], ['dudo-que'], 'The main point is the deadline, not a single verb.'),
+          task: 'Audición · Mensaje',
+          question: 'What is the problem if they wait until Monday?',
+        },
         read('b2-listen-2', talk, 'What does she want the group to do before Friday?', 'Review the plan', ['Review the plan', 'Wait until Monday', 'Skip the notes', 'Leave the project'], ['vengas']),
         conjugate('b2-listen-3', 'Quiero que nosotros ___ el plan. (revisar)', 'revisemos', ['estudies'], [], 'Nosotros subjunctive ends in -emos for -ar: revisemos.'),
         choice('b2-listen-4', 'en-es', 'I don’t think that we have', 'No creo que tengamos', ['No creo que tengamos', 'No creo que tenemos', 'Sé que tengamos', 'Creo que tengamos tiempo siempre'], ['tenga']),

@@ -36,27 +36,36 @@ export const b1Units: Unit[] = [
     accent: '#3D4F8A',
     lessons: [
       lesson('b1-story', 'One day in the past', 'Pretérito for events, imperfect for the scene.', [
-        read(
-          'b1-story-1',
-          'Ayer llovía cuando salí de casa. Llevaba un abrigo porque hacía frío. En la esquina encontré a Lucía y tomamos un café.',
-          'What was the weather like when the narrator left?',
-          'It was raining',
-          ['It was raining', 'It was sunny', 'It had already stopped', 'It was night'],
-          ['era'],
-          'en',
-          'Llovía sets the scene. Salí and encontré are the events.',
-        ),
+        {
+          ...read(
+            'b1-story-1',
+            'Ayer llovía cuando salí de casa. Llevaba un abrigo porque hacía frío. En la esquina encontré a Lucía y tomamos un café.',
+            'What was the weather like when the narrator left?',
+            'It was raining',
+            ['It was raining', 'It was sunny', 'It had already stopped', 'It was night'],
+            ['era'],
+            'en',
+            'Llovía sets the scene. Salí and encontré are the events.',
+          ),
+          task: 'Lectura · Texto breve',
+        },
         choice('b1-story-2', 'en-es', 'The background weather', 'Llovía', ['Llovía', 'Llovió una vez', 'Va a llover', 'Ha llovido'], ['vivia']),
         listen('b1-story-3', 'En la esquina encontré a Lucía', 'I met Lucía on the corner', ['I met Lucía on the corner', 'I used to meet Lucía', 'Lucía was on every corner', 'I will meet Lucía'], ['visite']),
         conjugate('b1-story-4', 'Ayer yo ___ de casa a las ocho. (salir)', 'salí', ['fui'], [], 'Salir: salí, saliste, salió.'),
         bank('b1-story-5', 'It was cold', ['Hacía', 'frío'], ['Hizo', 'ayer'], ['tenia']),
-        typeIn('b1-story-6', 'en-es', 'I met', 'conocí', ['visite'], ['conoci']),
+        typeIn('b1-story-6', 'en-es', 'I met', 'conocí', ['visite']),
         say('b1-story-7', 'Ayer llovía cuando salí', 'It was raining when I left yesterday', ['era']),
         typeIn('b1-story-8', 'en-es', 'I left', 'salí', ['fui']),
       ]),
       lesson('b1-read-trip', 'A trip to Oaxaca', 'Read a short account and answer.', [
-        read('b1-read-trip-1', oaxaca, 'What did the narrator buy?', 'Chocolate', ['Chocolate', 'A train ticket', 'A dog', 'Nothing'], ['chocolate']),
-        read('b1-read-trip-2', oaxaca, 'How did the narrator feel at night?', 'Tired but happy', ['Tired but happy', 'Angry and lost', 'Still at the market', 'Afraid of the sun'], ['monte-alban']),
+        {
+          ...read('b1-read-trip-1', oaxaca, 'What did the narrator buy?', 'Chocolate', ['Chocolate', 'A train ticket', 'A dog', 'Nothing'], ['chocolate']),
+          task: 'Lectura · Narración',
+        },
+        {
+          ...read('b1-read-trip-2', oaxaca, 'How did the narrator feel at night?', 'Tired but happy', ['Tired but happy', 'Angry and lost', 'Still at the market', 'Afraid of the sun'], ['monte-alban']),
+          task: 'Lectura · Narración',
+        },
         choice('b1-read-trip-3', 'en-es', 'the next day', 'al día siguiente', ['al día siguiente', 'todos los días', 'cuando era niño', 'por la mañana siempre'], ['visite']),
         listen('b1-read-trip-4', 'Hacía sol y el lugar era impresionante', 'It was sunny and the place was impressive', ['It was sunny and the place was impressive', 'It rained all day', 'The market was closed', 'They left at night'], ['monte-alban']),
         bank('b1-read-trip-5', 'I was tired', ['Estaba', 'cansado'], ['Era', 'soy'], ['cansado']),
@@ -101,7 +110,7 @@ export const b1Units: Unit[] = [
     accent: '#C4553A',
     lessons: [
       lesson('b1-perfect', 'I have done it', 'He comido, has vivido, ha dicho.', [
-        choice('b1-perfect-1', 'en-es', 'I have eaten', 'He comido', ['He comido', 'He comí', 'Había comido', 'Comía'], ['he-comido'], 'Haber plus the participle: he, has, ha, hemos, han.'),
+        choice('b1-perfect-1', 'en-es', 'I have eaten', 'He comido', ['He comido', 'He comí', 'Había comido', 'Comía'], ['he-comido'], 'Haber plus the participle: he, has, ha, hemos, han. The A2 note still applies: much of Latin America uses comí for today as well.'),
         listen('b1-perfect-2', 'Hoy ya he desayunado', 'I have already had breakfast today', ['I have already had breakfast today', 'I used to have breakfast', 'I will have breakfast', 'She has already left'], ['he-comido']),
         conjugate('b1-perfect-3', 'Nosotros ___ al museo. (haber + ir)', 'hemos ido', ['hemos-ido'], [], 'Ir uses ido: he ido, hemos ido.'),
         choice('b1-perfect-4', 'es-en', 'Ha dicho', 'She has said', ['She has said', 'She said yesterday once', 'She used to say', 'She would say'], ['ha-dicho']),
@@ -139,15 +148,22 @@ export const b1Units: Unit[] = [
         typeIn('b1-opinions-8', 'en-es', 'it seems to me', 'me parece', ['me-parece']),
       ]),
       lesson('b1-plans', 'Tomorrow’s plan', 'Listen to a longer plan.', [
-        listen('b1-plans-1', plans, 'She will take the eight o’clock train', ['She will take the eight o’clock train', 'She already took the train', 'She used to take the train', 'She might skip the trip'], ['tomare'], 'Listen for the whole plan, not just one word.'),
-        read(
-          'b1-plans-2',
-          plans,
-          'What would she like to do in the afternoon?',
-          'Visit the center',
-          ['Visit the center', 'Stay home', 'Buy chocolate', 'Return at eight'],
-          ['gustaria'],
-        ),
+        {
+          ...listen('b1-plans-1', plans, 'She will take the eight o’clock train', ['She will take the eight o’clock train', 'She already took the train', 'She used to take the train', 'She might skip the trip'], ['tomare'], 'Listen for the whole plan, not just one word.'),
+          task: 'Audición · Monólogo',
+          question: 'Which train will she take?',
+        },
+        {
+          ...read(
+            'b1-plans-2',
+            plans,
+            'What would she like to do in the afternoon?',
+            'Visit the center',
+            ['Visit the center', 'Stay home', 'Buy chocolate', 'Return at eight'],
+            ['gustaria'],
+          ),
+          task: 'Lectura · Plan',
+        },
         choice('b1-plans-3', 'en-es', 'I will take', 'tomaré', ['tomaré', 'tomé', 'tomaba', 'tomo'], ['tomare']),
         conjugate('b1-plans-4', 'Yo ___ a las diez. (llegar)', 'llegaré', ['viajare'], [], 'Future of llegar: llegaré.'),
         bank('b1-plans-5', 'I am going to leave early', ['Voy', 'a', 'salir', 'temprano'], ['Salí', 'ayer'], ['voy-a']),

@@ -10,18 +10,45 @@ export function normalize(input: string): string {
     .trim()
 }
 
-/** Conjugation keeps accents: hablé and hable are different forms. */
+/** Keep accents and ñ. Punctuation and case still do not matter. */
+export function foldMarks(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[¿?¡!.,;:'"“”‘’«»]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+export type MarkedAnswer = { match: boolean; missingMark: boolean }
+
+/** Drop accents, keep ñ as its own letter. ano and año stay different. */
+export function foldLoose(input: string): string {
+  const marked = foldMarks(input).replace(/ñ/g, '\u0000')
+  return marked
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/\u0000/g, 'ñ')
+}
+
+/**
+ * A missing accent still counts and is flagged. ñ is a separate letter, so n does not stand in for it.
+ */
+export function markAnswer(input: string, expected: string, accept: readonly string[] = []): MarkedAnswer {
+  const loose = foldLoose(input)
+  if (!loose) return { match: false, missingMark: false }
+  const candidates = [expected, ...accept]
+  const strictHit = candidates.some((candidate) => foldMarks(candidate) === foldMarks(input))
+  if (strictHit) return { match: true, missingMark: false }
+  const looseHit = candidates.some((candidate) => foldLoose(candidate) === loose)
+  return { match: looseHit, missingMark: looseHit }
+}
+
+/** Strict conjugation check. Lesson scoring uses markAnswer so a missing accent is flagged, not failed. */
 export function conjugateMatch(input: string, expected: string, accept: readonly string[] = []): boolean {
-  const fold = (value: string) =>
-    value
-      .trim()
-      .toLowerCase()
-      .replace(/[¿?¡!.,;:'"“”‘’«»]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim()
-  const value = fold(input)
+  const value = foldMarks(input)
   if (!value) return false
-  return [expected, ...accept].some((candidate) => fold(candidate) === value)
+  return [expected, ...accept].some((candidate) => foldMarks(candidate) === value)
 }
 
 export function answersMatch(input: string, expected: string, accept: readonly string[] = []): boolean {

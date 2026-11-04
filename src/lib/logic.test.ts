@@ -15,7 +15,7 @@ import {
   XP_LESSON_BONUS,
 } from './progress'
 import { buildReviewExercises } from './review'
-import { answersMatch, conjugateMatch, normalize, speakMatch } from './text'
+import { answersMatch, conjugateMatch, markAnswer, normalize, speakMatch } from './text'
 
 describe('answers', () => {
   it('ignores accents, case, and Spanish punctuation', () => {
@@ -25,6 +25,30 @@ describe('answers', () => {
     expect(answersMatch('hola amigo', 'adiós')).toBe(false)
     expect(conjugateMatch('hablé', 'hablé')).toBe(true)
     expect(conjugateMatch('hable', 'hablé')).toBe(false)
+  })
+
+  it('accepts a missing accent and flags it, and keeps ñ distinct from n', () => {
+    expect(markAnswer('hablé', 'hablé')).toEqual({ match: true, missingMark: false })
+    expect(markAnswer('hable', 'hablé')).toEqual({ match: true, missingMark: true })
+    expect(markAnswer('como', 'como')).toEqual({ match: true, missingMark: false })
+    expect(markAnswer('Mexico', 'México')).toEqual({ match: true, missingMark: true })
+    expect(markAnswer('comí', 'hablé').match).toBe(false)
+    expect(markAnswer('niño', 'niño')).toEqual({ match: true, missingMark: false })
+    expect(markAnswer('nino', 'niño')).toEqual({ match: false, missingMark: false })
+    expect(markAnswer('ano', 'año')).toEqual({ match: false, missingMark: false })
+    const flagged = settleExercise(
+      { id: 't', type: 'conjugate', prompt: 'yo (hablar)', answer: 'hablé', vocabIds: ['hable'] },
+      { kind: 'conjugate', value: 'hable' },
+    )
+    expect(flagged.correct).toBe(true)
+    expect(flagged.heart).toBe(false)
+    expect(flagged.note).toMatch(/accent/)
+    const exact = settleExercise(
+      { id: 't2', type: 'type', direction: 'en-es', prompt: 'station', answer: 'estación', vocabIds: ['estacion'] },
+      { kind: 'type', value: 'estación' },
+    )
+    expect(exact.correct).toBe(true)
+    expect(exact.note).toBeUndefined()
   })
 
   it('accepts a heard phrase with extra words', () => {

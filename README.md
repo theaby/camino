@@ -23,7 +23,7 @@ npm run preview
 
 ## Levels
 
-The path runs from A1 through C1. The original twelve lessons stay first, with the same ids, so saved progress still lines up. Later lessons add the preterite and imperfect, future and conditional, perfect tenses, the subjunctive, and longer reading and listening.
+The path runs from A1 through C1. The original twelve lessons stay first, with the same ids, so saved progress still lines up. Later lessons add the preterite and imperfect, future and conditional, perfect tenses, the subjunctive, and longer reading and listening. [CURRICULUM.md](CURRICULUM.md) maps each unit to its CEFR level and to the Instituto Cervantes Plan Curricular. Typed answers that leave out an accent still count, and the lesson says so. ñ stays ñ.
 
 `npm test` includes a course check: unique ids, answers that are actually among the options, word-bank tiles that include the answer, and vocabulary that is used. `npm run validate` runs that check on its own.
 

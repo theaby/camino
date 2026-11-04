@@ -60,6 +60,11 @@ export type ListenExercise = {
   answer: string
   vocabIds: string[]
   tip?: string
+  /** DELE-style task label, e.g. "Audición · Mensaje". */
+  task?: string
+  /** Specific question. When set, it replaces "What does this mean?" */
+  question?: string
+  questionLang?: 'en' | 'es'
 }
 
 export type SpeakExercise = {
@@ -81,6 +86,8 @@ export type ReadExercise = {
   answer: string
   vocabIds: string[]
   tip?: string
+  /** DELE-style task label, e.g. "Lectura · Cartel". */
+  task?: string
 }
 
 export type ConjugateExercise = {

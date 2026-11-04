@@ -271,6 +271,7 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
                   <p className="feedback-line" lang="es">
                     {result.line}
                   </p>
+                  {result.note ? <p className="feedback-note">{result.note}</p> : null}
                   {result.heart && heartsEnabled ? <p className="feedback-heart">−1 heart</p> : null}
                 </div>
               ) : (
@@ -320,7 +321,9 @@ function promptFor(exercise: Exercise): { text: string; lang?: string } | null {
     case 'match':
       return { text: exercise.prompt, lang: 'en' }
     case 'listen':
-      return { text: 'What does this mean?', lang: 'en' }
+      return exercise.question
+        ? { text: exercise.question, lang: exercise.questionLang ?? 'en' }
+        : { text: 'What does this mean?', lang: 'en' }
     case 'speak':
       return null
     case 'read':
@@ -340,8 +343,12 @@ function footerHint(exercise: Exercise): string {
       return 'Tap words to build the sentence.'
     case 'read':
       return 'Read the passage, then answer.'
+    case 'type':
+      return exercise.direction === 'en-es'
+        ? 'Type the Spanish. A missing accent still counts, and we will flag it. ñ has to be ñ.'
+        : 'Type the English, then check.'
     case 'conjugate':
-      return 'Type the correct form. Accents count.'
+      return 'Type the form. A missing accent still counts, and we will flag it. ñ has to be ñ.'
     default:
       return 'Choose an answer, then check.'
   }

@@ -93,20 +93,23 @@ export const c1Units: Unit[] = [
     accent: '#1F7A4D',
     lessons: [
       lesson('c1-argument', 'Remote work', 'Find the claim and the concession.', [
-        read(
-          'c1-argument-1',
-          argument,
-          '¿Cuál es la tesis del texto?',
-          'El trabajo a distancia solo es justo bajo ciertas condiciones',
-          [
+        {
+          ...read(
+            'c1-argument-1',
+            argument,
+            '¿Cuál es la tesis del texto?',
             'El trabajo a distancia solo es justo bajo ciertas condiciones',
-            'El trabajo a distancia siempre mejora la productividad',
-            'Hay que prohibir el trabajo a distancia',
-            'Los desplazamientos no importan',
-          ],
-          ['conciliar'],
-          'es',
-        ),
+            [
+              'El trabajo a distancia solo es justo bajo ciertas condiciones',
+              'El trabajo a distancia siempre mejora la productividad',
+              'Hay que prohibir el trabajo a distancia',
+              'Los desplazamientos no importan',
+            ],
+            ['conciliar'],
+            'es',
+          ),
+          task: 'Lectura · Texto argumentativo',
+        },
         read(
           'c1-argument-2',
           argument,
@@ -129,18 +132,22 @@ export const c1Units: Unit[] = [
         typeIn('c1-argument-8', 'en-es', 'to balance', 'conciliar', ['conciliar']),
       ]),
       lesson('c1-budget', 'A condition on the project', 'Listen, then answer in a full phrase.', [
-        listen(
-          'c1-budget-1',
-          budget,
-          'The speaker will not promise a date until the budget is adjusted',
-          [
+        {
+          ...listen(
+            'c1-budget-1',
+            budget,
             'The speaker will not promise a date until the budget is adjusted',
-            'The speaker denies that the project has any value',
-            'The project is already finished',
-            'They should ignore the budget',
-          ],
-          ['a-menos-que', 'por-lo-tanto'],
-        ),
+            [
+              'The speaker will not promise a date until the budget is adjusted',
+              'The speaker denies that the project has any value',
+              'The project is already finished',
+              'They should ignore the budget',
+            ],
+            ['a-menos-que', 'por-lo-tanto'],
+          ),
+          task: 'Audición · Monólogo',
+          question: 'What condition does the speaker set?',
+        },
         read(
           'c1-budget-2',
           budget,

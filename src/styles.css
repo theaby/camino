@@ -473,6 +473,7 @@ h1, h2, p { overflow-wrap: anywhere; }
 .feedback-title { margin: 0; font-weight: 800; font-size: 1.15rem; }
 .feedback-line { margin: 4px 0 0; font-family: Literata, Georgia, serif; font-size: 1.15rem; }
 .feedback-heart { margin: 4px 0 0; font-weight: 800; color: var(--coral); }
+.feedback-note { margin: 4px 0 0; font-weight: 700; }
 
 .summary h1 { margin: 6px 0; font-size: clamp(2rem, 6vw, 2.6rem); }
 .summary-xp { font-weight: 800; font-size: 1.4rem; color: var(--green-deep); margin: 0 0 8px; }

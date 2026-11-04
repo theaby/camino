@@ -12,13 +12,13 @@ export const levels: Level[] = [
   {
     id: 'A1',
     title: 'A1 · Beginner',
-    canDo: 'Greetings, the present, ser and estar, and everyday needs.',
+    canDo: 'Greetings, articles, the present, ser and estar, and everyday needs.',
     units: [...starterUnits, ...a1ExtraUnits],
   },
   {
     id: 'A2',
     title: 'A2 · Elementary',
-    canDo: 'A finished past, routines, pronouns, and how things used to be.',
+    canDo: 'A finished past, the present perfect, routines, and how things used to be.',
     units: a2Units,
   },
   {
