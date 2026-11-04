@@ -21,6 +21,14 @@ npm run build
 npm run preview
 ```
 
+## Levels
+
+The path runs from A1 through C1. The original twelve lessons stay first, with the same ids, so saved progress still lines up. Later lessons add the preterite and imperfect, future and conditional, perfect tenses, the subjunctive, and longer reading and listening. [CURRICULUM.md](CURRICULUM.md) maps each unit to its CEFR level and to the Instituto Cervantes Plan Curricular. Typed answers that leave out an accent still count, and the lesson says so. ñ stays ñ.
+
+`npm test` includes a course check: unique ids, answers that are actually among the options, word-bank tiles that include the answer, and vocabulary that is used. `npm run validate` runs that check on its own.
+
+From the path, **Find your level** is a short placement check. It marks earlier levels done without changing XP. **Test out** does the same for one level, and needs two thirds of those items.
+
 ## Add a unit
 
 Course content lives in [`src/data/course.ts`](src/data/course.ts).
@@ -45,11 +53,11 @@ choice(
 
 `npm test` checks that every lesson is a reasonable length, every answer is actually one of the options, word-bank tiles include the answer, and every vocab id exists.
 
-Typing ignores accents and `¿` / `¡`, so beginners can answer `como estas` for `¿Cómo estás?`.
+A typed answer that leaves out an accent still counts, and the lesson says so. `ñ` stays `ñ`. `¿` and `¡` are optional.
 
 ## Accounts with Firebase
 
-Camino uses the Firebase Spark (free) plan: Authentication (email/password and Google) and one Cloud Firestore document per person at `users/{uid}`. Hearts are only for the lesson you’re in, so they are not stored. The web config is public by design. If those values are missing at build time, the app stays in guest-only mode and does not call Firebase.
+Camino uses the Firebase Spark (free) plan: Authentication (email/password and Google) and one Cloud Firestore document per person at `users/{uid}`. That document is the same progress record as guest mode: XP, streak, finished lesson ids, and review words. Placement and test-out only add lesson ids, and those ids are written to the same document. The first sign-in folds the guest record in, including those ids, without adding XP for a lesson that was granted rather than played. Later sign-ins add only what changed on the device. Hearts are only for the lesson you’re in, so they are not stored. The web config is public by design. If those values are missing at build time, the app stays in guest-only mode and does not call Firebase.
 
 ### Try it locally with the emulators
 

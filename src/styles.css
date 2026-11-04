@@ -474,6 +474,7 @@ button.pill { cursor: pointer; }
 .feedback-title { margin: 0; font-weight: 800; font-size: 1.15rem; }
 .feedback-line { margin: 4px 0 0; font-family: Literata, Georgia, serif; font-size: 1.15rem; }
 .feedback-heart { margin: 4px 0 0; font-weight: 800; color: var(--coral); }
+.feedback-note { margin: 4px 0 0; font-weight: 700; }
 
 .summary h1 { margin: 6px 0; font-size: clamp(2rem, 6vw, 2.6rem); }
 .summary-xp { font-weight: 800; font-size: 1.4rem; color: var(--green-deep); margin: 0 0 8px; }
@@ -586,7 +587,6 @@ button.pill { cursor: pointer; }
   background: white;
   padding: 12px 14px;
   font-size: 1.05rem;
-  font-weight: 650;
   font-weight: 600;
 }
 .form-error, .form-notice {
@@ -623,3 +623,32 @@ button.pill { cursor: pointer; }
 }
 .btn-google:disabled { opacity: 0.6; }
 .account-email { font-weight: 800; color: var(--ink); overflow-wrap: anywhere; }
+.passage {
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+  font-family: Literata, Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.level-block { margin-top: 28px; }
+.level-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.level-head h2 { margin: 0; font-size: 1.35rem; }
+.level-head p { margin: 4px 0 0; color: var(--ink-soft); }
+.level-actions { display: flex; gap: 8px; }
+.hero .btn-quiet {
+  width: 100%;
+  margin-top: 8px;
+  color: white;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.55);
+}

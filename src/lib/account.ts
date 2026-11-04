@@ -117,7 +117,8 @@ function combinedXp(remote: Progress, extra: Progress, isDelta: boolean): number
   if (isDelta) return remote.xp + extra.xp
   const high = remote.xp >= extra.xp ? remote : extra
   const low = high === remote ? extra : remote
-  const onlyLow = low.completedLessons.filter((id) => !high.completedLessons.includes(id))
+  // A played lesson has a stat. Placement and test-out only add the id, so they must not invent XP.
+  const onlyLow = low.completedLessons.filter((id) => !high.completedLessons.includes(id) && low.lessonStats[id])
   return high.xp + onlyLow.length * XP_LESSON_BONUS
 }
 

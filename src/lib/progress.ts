@@ -236,6 +236,19 @@ export function applyReviewResult(
   return { state: next, xpGained }
 }
 
+/** Add lesson ids without changing XP, streak, or review cards. */
+export function grantLessons(state: Progress, lessonIds: readonly string[]): Progress {
+  const seen = new Set(state.completedLessons)
+  const completedLessons = [...state.completedLessons]
+  for (const id of lessonIds) {
+    if (seen.has(id)) continue
+    seen.add(id)
+    completedLessons.push(id)
+  }
+  if (completedLessons.length === state.completedLessons.length) return state
+  return { ...state, completedLessons }
+}
+
 export function resetProgress(previous: Progress): Progress {
   return { ...emptyProgress(), sound: previous.sound, welcomed: true }
 }

@@ -1,5 +1,5 @@
 import type { Exercise } from '../data/types'
-import { answersMatch, speakMatch } from './text'
+import { answersMatch, markAnswer, speakMatch } from './text'
 
 export type Grade = { vocabId: string; correct: boolean }
 
@@ -11,6 +11,8 @@ export type Draft =
   | { kind: 'speak'; transcript: string }
   | { kind: 'speak-skip' }
   | { kind: 'match'; mistakes: number }
+  | { kind: 'read'; value: string }
+  | { kind: 'conjugate'; value: string }
 
 export type Settlement = {
   correct: boolean
@@ -18,6 +20,7 @@ export type Settlement = {
   heart: boolean
   grades: Grade[]
   line: string
+  note?: string
 }
 
 export function vocabIdsOf(exercise: Exercise): string[] {
@@ -32,7 +35,10 @@ export function draftReady(draft: Draft | null): boolean {
     case 'listen':
       return draft.value.length > 0
     case 'type':
+    case 'conjugate':
       return draft.value.trim().length > 0
+    case 'read':
+      return draft.value.length > 0
     case 'bank':
       return draft.values.length > 0
     case 'speak':
@@ -47,6 +53,18 @@ export function draftReady(draft: Draft | null): boolean {
 
 function gradesFor(ids: readonly string[], correct: boolean): Grade[] {
   return ids.map((vocabId) => ({ vocabId, correct }))
+}
+
+function typedSettlement(ids: string[], input: string, expected: string, accept: readonly string[] = []): Settlement {
+  const marked = markAnswer(input, expected, accept)
+  return {
+    correct: marked.match,
+    skipped: false,
+    heart: !marked.match,
+    grades: gradesFor(ids, marked.match),
+    line: expected,
+    ...(marked.missingMark ? { note: 'That counts. The spelling uses an accent.' } : {}),
+  }
 }
 
 export function settleExercise(exercise: Exercise, draft: Draft): Settlement {
@@ -84,14 +102,7 @@ export function settleExercise(exercise: Exercise, draft: Draft): Settlement {
   }
 
   if (exercise.type === 'type' && draft.kind === 'type') {
-    const correct = answersMatch(draft.value, exercise.answer, exercise.accept ?? [])
-    return {
-      correct,
-      skipped: false,
-      heart: !correct,
-      grades: gradesFor(ids, correct),
-      line: exercise.answer,
-    }
+    return typedSettlement(ids, draft.value, exercise.answer, exercise.accept ?? [])
   }
 
   if (exercise.type === 'bank' && draft.kind === 'bank') {
@@ -117,6 +128,21 @@ export function settleExercise(exercise: Exercise, draft: Draft): Settlement {
       grades: gradesFor(ids, correct),
       line: correct ? exercise.phrase : `We need “${exercise.phrase}”. Heard “${draft.transcript.trim()}”.`,
     }
+  }
+
+  if (exercise.type === 'read' && draft.kind === 'read') {
+    const correct = answersMatch(draft.value, exercise.answer)
+    return {
+      correct,
+      skipped: false,
+      heart: !correct,
+      grades: gradesFor(ids, correct),
+      line: exercise.answer,
+    }
+  }
+
+  if (exercise.type === 'conjugate' && draft.kind === 'conjugate') {
+    return typedSettlement(ids, draft.value, exercise.answer, exercise.accept ?? [])
   }
 
   if (exercise.type === 'match' && draft.kind === 'match') {
@@ -152,9 +178,13 @@ export function exerciseKicker(exercise: Exercise): string {
     case 'match':
       return 'Match the pairs'
     case 'listen':
-      return 'Listen'
+      return exercise.task ?? 'Listen'
     case 'speak':
       return 'Say it in Spanish'
+    case 'read':
+      return exercise.task ?? 'Read'
+    case 'conjugate':
+      return 'Conjugate'
   }
 }
 

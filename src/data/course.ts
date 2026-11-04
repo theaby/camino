@@ -72,7 +72,8 @@ export const vocab: Vocab[] = [
   { id: 'estacion', es: 'estación', en: 'station' },
   { id: 'hotel', es: 'hotel', en: 'hotel' },
   { id: 'bano', es: 'baño', en: 'bathroom' },
-  { id: 'boleto', es: 'boleto', en: 'ticket' },
+  { id: 'boleto', es: 'boleto', en: 'ticket (much of the Americas)' },
+  { id: 'billete', es: 'billete', en: 'ticket (Spain and most textbooks)' },
   { id: 'taxi', es: 'taxi', en: 'taxi' },
   { id: 'tren', es: 'tren', en: 'train' },
   { id: 'izquierda', es: 'izquierda', en: 'left' },
@@ -198,7 +199,7 @@ export const course: Unit[] = [
         choice('greetings-how-3', 'es-en', 'Estoy bien', "I'm well", ["I'm well", "I'm not well", 'So-so', 'Thank you'], ['estoy-bien']),
         bank('greetings-how-4', "I'm well", ['Estoy', 'bien'], ['mal', 'Hola'], ['estoy-bien']),
         choice('greetings-how-5', 'es-en', 'Más o menos', 'So-so', ['So-so', "I'm well", 'Goodbye', 'Please'], ['mas-o-menos']),
-        typeIn('greetings-how-6', 'en-es', "I'm not well", 'estoy mal', ['estoy-mal']),
+        typeIn('greetings-how-6', 'en-es', "I'm not well", 'estoy mal', ['estoy-mal'], undefined, 'Estoy mal is understood. A usual reply is No estoy bien, or a feeling with estar: Estoy cansado.'),
         match('greetings-how-7', [
           { es: '¿Cómo estás?', en: 'How are you?', vocabId: 'como-estas' },
           { es: 'Mucho gusto', en: 'Nice to meet you', vocabId: 'mucho-gusto' },
@@ -218,7 +219,7 @@ export const course: Unit[] = [
     accent: '#1F6F8A',
     lessons: [
       lesson('numbers-1', 'One to five', 'Small numbers, said aloud.', [
-        choice('numbers-1-1', 'en-es', '1', 'uno', ['uno', 'dos', 'tres', 'cinco'], ['uno']),
+        choice('numbers-1-1', 'en-es', '1', 'uno', ['uno', 'dos', 'tres', 'cinco'], ['uno'], 'Before a masculine noun, uno shortens to un: un café. Una is the feminine form.'),
         listen('numbers-1-2', 'tres', '3', ['3', '2', '4', '5'], ['tres']),
         choice('numbers-1-3', 'es-en', 'cinco', '5', ['5', '4', '2', '1'], ['cinco']),
         bank('numbers-1-4', '1, 2', ['uno', 'dos'], ['tres', 'cinco'], ['uno', 'dos'], 'Say the numbers in order, with a small pause between them.'),
@@ -274,7 +275,7 @@ export const course: Unit[] = [
         ]),
         say('food-drinks-8', 'Quiero café', 'I want coffee', ['quiero', 'cafe']),
         listen('food-drinks-9', 'leche', 'milk', ['milk', 'water', 'tea', 'coffee'], ['leche']),
-        typeIn('food-drinks-10', 'en-es', 'I want tea', 'quiero té', ['quiero', 'te'], ['quiero te']),
+        typeIn('food-drinks-10', 'en-es', 'I want tea', 'quiero té', ['quiero', 'te']),
       ]),
       lesson('food-table', 'At the table', 'A few foods, the price, and the check.', [
         choice('food-table-1', 'en-es', 'bread', 'pan', ['pan', 'pollo', 'manzana', 'queso'], ['pan']),
@@ -356,7 +357,7 @@ export const course: Unit[] = [
         choice('travel-places-3', 'en-es', 'hotel', 'el hotel', ['el hotel', 'el baño', 'el tren', 'el taxi'], ['hotel'], 'El is the masculine the: el hotel, el baño, el tren.'),
         choice('travel-places-4', 'en-es', 'bathroom', 'el baño', ['el baño', 'el hotel', 'la estación', 'el aeropuerto'], ['bano']),
         bank('travel-places-5', 'the airport', ['el', 'aeropuerto'], ['estación', 'la'], ['aeropuerto']),
-        typeIn('travel-places-6', 'en-es', 'station', 'estación', ['estacion'], ['la estacion', 'la estación']),
+        typeIn('travel-places-6', 'en-es', 'station', 'estación', ['estacion'], ['la estación']),
         match('travel-places-7', [
           { es: 'aeropuerto', en: 'airport', vocabId: 'aeropuerto' },
           { es: 'estación', en: 'station', vocabId: 'estacion' },
@@ -365,24 +366,24 @@ export const course: Unit[] = [
         ]),
         say('travel-places-8', 'el baño', 'the bathroom', ['bano']),
         listen('travel-places-9', 'el hotel', 'hotel', ['hotel', 'station', 'airport', 'bathroom'], ['hotel']),
-        typeIn('travel-places-10', 'en-es', 'bathroom', 'baño', ['bano'], ['el bano', 'el baño']),
+        typeIn('travel-places-10', 'en-es', 'bathroom', 'baño', ['bano'], ['el baño']),
       ]),
       lesson('travel-move', 'Getting around', 'A ticket, a train, and which way.', [
-        choice('travel-move-1', 'en-es', 'ticket', 'el boleto', ['el boleto', 'el tren', 'el taxi', 'la estación'], ['boleto'], 'In Spain you will also hear el billete for ticket.'),
+        choice('travel-move-1', 'en-es', 'ticket', 'el billete', ['el billete', 'el tren', 'el taxi', 'la estación'], ['billete'], 'This course writes el billete, the word in Spain and in most textbooks. Much of the Americas says el boleto. Both are accepted when you type a ticket phrase.'),
         listen('travel-move-2', 'taxi', 'taxi', ['taxi', 'train', 'ticket', 'station'], ['taxi']),
         choice('travel-move-3', 'es-en', 'tren', 'train', ['train', 'taxi', 'ticket', 'left'], ['tren']),
         choice('travel-move-4', 'en-es', 'left', 'izquierda', ['izquierda', 'derecha', 'estación', 'hotel'], ['izquierda']),
         bank('travel-move-5', 'to the right', ['a', 'la', 'derecha'], ['izquierda', 'el'], ['derecha'], 'A la derecha = to the right. A la izquierda = to the left.'),
         typeIn('travel-move-6', 'en-es', 'train', 'tren', ['tren'], ['el tren']),
         match('travel-move-7', [
-          { es: 'boleto', en: 'ticket', vocabId: 'boleto' },
+          { es: 'boleto', en: 'ticket (Americas)', vocabId: 'boleto' },
           { es: 'taxi', en: 'taxi', vocabId: 'taxi' },
           { es: 'izquierda', en: 'left', vocabId: 'izquierda' },
           { es: 'derecha', en: 'right', vocabId: 'derecha' },
         ]),
         say('travel-move-8', '¿Dónde está el baño?', 'Where is the bathroom?', ['donde-esta', 'bano']),
         choice('travel-move-9', 'es-en', '¿Dónde está?', 'Where is it?', ['Where is it?', 'How much is it?', 'How many?', 'See you later'], ['donde-esta']),
-        typeIn('travel-move-10', 'en-es', 'I want a ticket', 'quiero un boleto', ['quiero', 'boleto'], ['quiero un billete', 'quiero boleto']),
+        typeIn('travel-move-10', 'en-es', 'I want a ticket', 'quiero un billete', ['quiero', 'billete'], ['quiero un boleto', 'quiero boleto', 'quiero billete'], 'Boleto is the usual word in much of the Americas. It counts here too.'),
       ]),
     ],
   },
@@ -393,7 +394,7 @@ export const course: Unit[] = [
     accent: '#1F7A4D',
     lessons: [
       lesson('daily-me', 'About me', 'I am, and I like.', [
-        choice('daily-me-1', 'en-es', 'I am', 'soy', ['soy', 'tengo', 'quiero', 'estoy'], ['soy']),
+        choice('daily-me-1', 'en-es', 'I am', 'soy', ['soy', 'tengo', 'quiero', 'estoy'], ['soy'], 'Soy is ser: identity and origin. Estoy is estar: place and how you feel. The next unit separates them.'),
         listen('daily-me-2', 'Me gusta', 'I like', ['I like', 'I am', 'I want', 'I have'], ['me-gusta']),
         choice('daily-me-3', 'es-en', 'Me gusta el café', 'I like coffee', ['I like coffee', 'I want coffee', 'I am coffee', 'The coffee, please'], ['me-gusta', 'cafe']),
         bank('daily-me-4', 'I like bread', ['Me', 'gusta', 'el', 'pan'], ['la', 'agua'], ['me-gusta', 'pan'], 'Me gusta el pan = I like bread.'),

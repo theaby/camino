@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { emptyProgress, type Progress } from './progress'
+import { lessonIdsBefore, lessonsInLevel } from '../data/catalog'
+import { emptyProgress, grantLessons, type Progress } from './progress'
 import { firebaseConfigFrom, guestContribution, mergeAccount } from './account'
 
 function progress(partial: Partial<Progress>): Progress {
@@ -33,6 +34,7 @@ describe('account merge', () => {
     const guest = progress({
       xp: 30,
       completedLessons: ['numbers-1'],
+      lessonStats: { 'numbers-1': { correct: 8, total: 10, at: '2026-11-04', clears: 1 } },
       cards: { adios: { vocabId: 'adios', interval: 0, due: '2026-11-04', lapses: 2 } },
       streak: 1,
       lastPractice: '2026-11-04',
@@ -97,5 +99,28 @@ describe('account merge', () => {
       cards: { hola: { vocabId: 'hola', interval: 0, due: '2026-11-04', lapses: 3 } },
     })
     expect(mergeAccount(remote, extra, true).cards.hola).toMatchObject({ lapses: 3, due: '2026-11-04' })
+  })
+
+  it('carries placement and test-out lesson ids without inventing XP', () => {
+    const placed = grantLessons(emptyProgress(), lessonIdsBefore('A2'))
+    expect(placed.xp).toBe(0)
+    expect(placed.completedLessons).toContain('a1-ask')
+    expect(placed.completedLessons).not.toContain('a2-pret-ar')
+
+    const first = guestContribution(null, placed)
+    const remote = progress({ xp: 20, completedLessons: ['greetings-hello'] })
+    const account = mergeAccount(remote, first.progress, first.isDelta)
+    expect(account.xp).toBe(20)
+    expect(account.completedLessons).toEqual([...new Set(placed.completedLessons)].sort())
+
+    const tested = grantLessons(placed, lessonsInLevel('B1').map((lesson) => lesson.id))
+    const delta = guestContribution(placed, tested)
+    expect(delta.isDelta).toBe(true)
+    expect(delta.progress.xp).toBe(0)
+    expect(delta.progress.completedLessons).toEqual(lessonsInLevel('B1').map((lesson) => lesson.id).sort())
+    const synced = mergeAccount(account, delta.progress, delta.isDelta)
+    expect(synced.xp).toBe(20)
+    expect(synced.completedLessons).toContain('b1-story')
+    expect(synced.completedLessons).toContain('a1-ask')
   })
 })
