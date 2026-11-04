@@ -15,7 +15,7 @@ import {
   XP_LESSON_BONUS,
 } from './progress'
 import { buildReviewExercises } from './review'
-import { answersMatch, normalize, speakMatch } from './text'
+import { answersMatch, conjugateMatch, normalize, speakMatch } from './text'
 
 describe('answers', () => {
   it('ignores accents, case, and Spanish punctuation', () => {
@@ -23,6 +23,8 @@ describe('answers', () => {
     expect(answersMatch('adios', 'Adiós')).toBe(true)
     expect(answersMatch('la estacion', 'estación', ['la estación'])).toBe(true)
     expect(answersMatch('hola amigo', 'adiós')).toBe(false)
+    expect(conjugateMatch('hablé', 'hablé')).toBe(true)
+    expect(conjugateMatch('hable', 'hablé')).toBe(false)
   })
 
   it('accepts a heard phrase with extra words', () => {
@@ -158,7 +160,21 @@ describe('course', () => {
         if (exercise.type === 'match') expect(exercise.pairs).toHaveLength(4)
       }
     }
-    expect([...types].sort()).toEqual(['bank', 'choice', 'listen', 'match', 'speak', 'type'])
+    expect([...types].sort()).toEqual(['bank', 'choice', 'conjugate', 'listen', 'match', 'read', 'speak', 'type'])
+    expect(lessons.slice(0, 12).map((lesson) => lesson.id)).toEqual([
+      'greetings-hello',
+      'greetings-how',
+      'numbers-1',
+      'numbers-2',
+      'food-drinks',
+      'food-table',
+      'family-members',
+      'family-have',
+      'travel-places',
+      'travel-move',
+      'daily-me',
+      'daily-time',
+    ])
     for (const entry of vocab) expect(used.has(entry.id), entry.id).toBe(true)
     expect(isLessonUnlocked(lessons[0]!.id, [])).toBe(true)
     expect(isLessonUnlocked(lessons[1]!.id, [])).toBe(false)

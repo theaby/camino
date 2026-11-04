@@ -323,6 +323,10 @@ function promptFor(exercise: Exercise): { text: string; lang?: string } | null {
       return { text: 'What does this mean?', lang: 'en' }
     case 'speak':
       return null
+    case 'read':
+      return { text: exercise.question, lang: exercise.questionLang ?? 'en' }
+    case 'conjugate':
+      return { text: exercise.prompt, lang: 'es' }
   }
 }
 
@@ -334,6 +338,10 @@ function footerHint(exercise: Exercise): string {
       return 'Speak, then check. Or skip if the mic is unavailable.'
     case 'bank':
       return 'Tap words to build the sentence.'
+    case 'read':
+      return 'Read the passage, then answer.'
+    case 'conjugate':
+      return 'Type the correct form. Accents count.'
     default:
       return 'Choose an answer, then check.'
   }
@@ -342,7 +350,8 @@ function footerHint(exercise: Exercise): string {
 function canCheck(draft: Draft | null): boolean {
   if (!draft || draft.kind === 'match' || draft.kind === 'speak-skip') return false
   if (draft.kind === 'bank') return draft.values.length > 0
-  if (draft.kind === 'type') return draft.value.trim().length > 0
+  if (draft.kind === 'type' || draft.kind === 'conjugate') return draft.value.trim().length > 0
+  if (draft.kind === 'read') return draft.value.length > 0
   if (draft.kind === 'speak') return draft.transcript.trim().length > 0
   return draft.value.length > 0
 }

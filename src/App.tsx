@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { lessonById, vocabForIds } from './data/catalog'
-import { vocab } from './data/course'
+import { isLessonUnlocked, lessonById, lessonIdsBefore, lessonsInLevel, vocab, vocabForIds } from './data/catalog'
+import { LevelQuiz } from './components/LevelQuiz'
 import { PathScreen } from './components/PathScreen'
 import { ProfileScreen } from './components/ProfileScreen'
 import { ReviewScreen } from './components/ReviewScreen'
@@ -17,12 +17,14 @@ import {
   loadProgress,
   resetProgress,
   saveProgress,
+  grantLessons,
   todayISO,
   type Progress,
   type SessionSummary,
 } from './lib/progress'
-import { isLessonUnlocked } from './data/catalog'
 import { navigate, readRoute, type Route } from './lib/route'
+import { placementItems, quizCleared, startingLevel, testOutItems } from './data/placement'
+import { CEFR_LEVELS, type CefrLevel } from './data/types'
 
 export function App() {
   const [progress, setProgress] = useState<Progress>(() => loadProgress())
@@ -44,6 +46,7 @@ export function App() {
     if (route.name !== 'review') setReviewRun(null)
   }, [route])
 
+  const tab: 'path' | 'review' | 'profile' = route.name === 'review' || route.name === 'profile' ? route.name : 'path'
   const today = todayISO()
   const due = dueVocabIds(progress, today).length
   const inLesson = route.name === 'lesson'
@@ -52,7 +55,17 @@ export function App() {
 
   useEffect(() => {
     const label =
-      route.name === 'lesson' ? 'Lesson' : route.name === 'review' ? 'Review' : route.name === 'profile' ? 'You' : 'Learn'
+      route.name === 'lesson'
+        ? 'Lesson'
+        : route.name === 'review'
+          ? 'Review'
+          : route.name === 'profile'
+            ? 'You'
+            : route.name === 'placement'
+              ? 'Placement'
+              : route.name === 'test-out'
+                ? 'Test out'
+                : 'Learn'
     document.title = `Camino — ${label}`
   }, [route])
 
@@ -65,9 +78,9 @@ export function App() {
               <MarkIcon className="mark" />
               <span>Camino</span>
             </div>
-            <NavButton name="path" current={route.name} icon={<LearnIcon />} label="Learn" />
-            <NavButton name="review" current={route.name} icon={<ReviewIcon />} label="Review" badge={due} />
-            <NavButton name="profile" current={route.name} icon={<PersonIcon />} label="You" />
+            <NavButton name="path" current={tab} icon={<LearnIcon />} label="Learn" />
+            <NavButton name="review" current={tab} icon={<ReviewIcon />} label="Review" badge={due} />
+            <NavButton name="profile" current={tab} icon={<PersonIcon />} label="You" />
           </nav>
           <div className="content">
             <header className="topbar">
@@ -103,6 +116,40 @@ export function App() {
                     const items = vocabForIds(ids)
                     setReviewRun(buildReviewExercises(items, vocab, hashSeed(`${today}:${ids.join(',')}`)))
                   }}
+                />
+              ) : null}
+              {route.name === 'placement' ? (
+                <LevelQuiz
+                  title="Placement"
+                  intro="Answer without looking things up. This only decides where you start."
+                  items={placementItems}
+                  summarize={(answers) => {
+                    const level = startingLevel(answers)
+                    if (level === 'A1') {
+                      return { title: 'Start at A1', body: 'The basics are still the right place. Nothing is skipped, and your XP stays put.' }
+                    }
+                    return {
+                      title: `Start at ${level}`,
+                      body: `Lessons before ${level} will be marked done. Your XP and review words stay as they are.`,
+                    }
+                  }}
+                  confirmLabel="Save and continue"
+                  onConfirm={(answers) => {
+                    const level = startingLevel(answers)
+                    setProgress((current) => grantLessons(current, lessonIdsBefore(level)))
+                    navigate('/')
+                  }}
+                  onCancel={() => navigate('/')}
+                />
+              ) : null}
+              {route.name === 'test-out' ? (
+                <TestOut
+                  level={route.level}
+                  onPass={(ids) => {
+                    setProgress((current) => grantLessons(current, ids))
+                    navigate('/')
+                  }}
+                  onCancel={() => navigate('/')}
                 />
               ) : null}
               {route.name === 'profile' ? (
@@ -200,6 +247,40 @@ function LessonRoute({
       onResult={(summary) => onResult(lesson.id, summary)}
       onExit={() => navigate('/')}
       onRetry={onRetry}
+    />
+  )
+}
+
+function TestOut({ level, onPass, onCancel }: { level: string; onPass: (ids: string[]) => void; onCancel: () => void }) {
+  const known = CEFR_LEVELS.find((entry) => entry === level)
+  if (!known) {
+    return (
+      <div className="panel">
+        <h1>That level isn’t on the path.</h1>
+        <button type="button" className="btn-primary" onClick={onCancel}>
+          Back
+        </button>
+      </div>
+    )
+  }
+  const items = testOutItems.filter((item) => item.level === known)
+  return (
+    <LevelQuiz
+      title={`Test out of ${known}`}
+      intro="Three of four clears this level."
+      items={items}
+      summarize={(answers) => {
+        const passed = quizCleared(items, answers)
+        return passed
+          ? { title: `${known} is done`, body: 'Those lessons are marked done. Your XP does not change.' }
+          : { title: 'Not yet', body: `Stay with ${known} for now. Nothing is marked done.` }
+      }}
+      confirmLabel="Back to the path"
+      onConfirm={(answers) => {
+        if (quizCleared(items, answers)) onPass(lessonsInLevel(known as CefrLevel).map((lesson) => lesson.id))
+        else onCancel()
+      }}
+      onCancel={onCancel}
     />
   )
 }

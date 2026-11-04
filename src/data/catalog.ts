@@ -1,10 +1,10 @@
-import { course, vocab } from './course'
-import type { Lesson, Unit, Vocab } from './types'
+import { levels, vocab } from './levels'
+import type { CefrLevel, Lesson, Level, Unit, Vocab } from './types'
 
 export const vocabById = new Map<string, Vocab>(vocab.map((entry) => [entry.id, entry]))
 
 export function allLessons(): Lesson[] {
-  return course.flatMap((unit) => unit.lessons)
+  return levels.flatMap((level) => level.units.flatMap((unit) => unit.lessons))
 }
 
 export function lessonById(id: string): Lesson | undefined {
@@ -12,7 +12,21 @@ export function lessonById(id: string): Lesson | undefined {
 }
 
 export function unitForLesson(id: string): Unit | undefined {
-  return course.find((unit) => unit.lessons.some((lesson) => lesson.id === id))
+  return levels.flatMap((level) => level.units).find((unit) => unit.lessons.some((lesson) => lesson.id === id))
+}
+
+export function levelForLesson(id: string): Level | undefined {
+  return levels.find((level) => level.units.some((unit) => unit.lessons.some((lesson) => lesson.id === id)))
+}
+
+export function lessonsInLevel(levelId: CefrLevel): Lesson[] {
+  return levels.find((level) => level.id === levelId)?.units.flatMap((unit) => unit.lessons) ?? []
+}
+
+export function lessonIdsBefore(levelId: CefrLevel): string[] {
+  const index = levels.findIndex((level) => level.id === levelId)
+  if (index <= 0) return []
+  return levels.slice(0, index).flatMap((level) => level.units.flatMap((unit) => unit.lessons.map((lesson) => lesson.id)))
 }
 
 export function lessonIndex(id: string): number {
@@ -37,3 +51,5 @@ export function vocabForIds(ids: readonly string[]): Vocab[] {
     return entry ? [entry] : []
   })
 }
+
+export { levels, vocab }

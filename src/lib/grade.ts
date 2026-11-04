@@ -1,5 +1,5 @@
 import type { Exercise } from '../data/types'
-import { answersMatch, speakMatch } from './text'
+import { answersMatch, conjugateMatch, speakMatch } from './text'
 
 export type Grade = { vocabId: string; correct: boolean }
 
@@ -11,6 +11,8 @@ export type Draft =
   | { kind: 'speak'; transcript: string }
   | { kind: 'speak-skip' }
   | { kind: 'match'; mistakes: number }
+  | { kind: 'read'; value: string }
+  | { kind: 'conjugate'; value: string }
 
 export type Settlement = {
   correct: boolean
@@ -32,7 +34,10 @@ export function draftReady(draft: Draft | null): boolean {
     case 'listen':
       return draft.value.length > 0
     case 'type':
+    case 'conjugate':
       return draft.value.trim().length > 0
+    case 'read':
+      return draft.value.length > 0
     case 'bank':
       return draft.values.length > 0
     case 'speak':
@@ -119,6 +124,28 @@ export function settleExercise(exercise: Exercise, draft: Draft): Settlement {
     }
   }
 
+  if (exercise.type === 'read' && draft.kind === 'read') {
+    const correct = answersMatch(draft.value, exercise.answer)
+    return {
+      correct,
+      skipped: false,
+      heart: !correct,
+      grades: gradesFor(ids, correct),
+      line: exercise.answer,
+    }
+  }
+
+  if (exercise.type === 'conjugate' && draft.kind === 'conjugate') {
+    const correct = conjugateMatch(draft.value, exercise.answer, exercise.accept ?? [])
+    return {
+      correct,
+      skipped: false,
+      heart: !correct,
+      grades: gradesFor(ids, correct),
+      line: exercise.answer,
+    }
+  }
+
   if (exercise.type === 'match' && draft.kind === 'match') {
     const correct = draft.mistakes === 0
     return {
@@ -155,6 +182,10 @@ export function exerciseKicker(exercise: Exercise): string {
       return 'Listen'
     case 'speak':
       return 'Say it in Spanish'
+    case 'read':
+      return 'Read'
+    case 'conjugate':
+      return 'Conjugate'
   }
 }
 

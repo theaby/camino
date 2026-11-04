@@ -21,6 +21,14 @@ npm run build
 npm run preview
 ```
 
+## Levels
+
+The path runs from A1 through C1. The original twelve lessons stay first, with the same ids, so saved progress still lines up. Later lessons add the preterite and imperfect, future and conditional, perfect tenses, the subjunctive, and longer reading and listening.
+
+`npm test` includes a course check: unique ids, answers that are actually among the options, word-bank tiles that include the answer, and vocabulary that is used. `npm run validate` runs that check on its own.
+
+From the path, **Find your level** is a short placement check. It marks earlier levels done without changing XP. **Test out** does the same for one level, and needs two thirds of those items.
+
 ## Add a unit
 
 Course content lives in [`src/data/course.ts`](src/data/course.ts).

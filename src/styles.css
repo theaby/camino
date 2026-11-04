@@ -574,3 +574,33 @@ h1, h2, p { overflow-wrap: anywhere; }
   75% { transform: translateX(6px); }
 }
 .shake { animation: shake 0.35s ease; }
+
+.passage {
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+  font-family: Literata, Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.level-block { margin-top: 28px; }
+.level-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.level-head h2 { margin: 0; font-size: 1.35rem; }
+.level-head p { margin: 4px 0 0; color: var(--ink-soft); }
+.level-actions { display: flex; gap: 8px; }
+.hero .btn-quiet {
+  width: 100%;
+  margin-top: 8px;
+  color: white;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.55);
+}

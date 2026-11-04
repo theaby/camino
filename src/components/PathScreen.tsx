@@ -1,6 +1,5 @@
 import type { CSSProperties } from 'react'
-import { course } from '../data/course'
-import { allLessons, isLessonUnlocked, nextIncomplete } from '../data/catalog'
+import { allLessons, isLessonUnlocked, levels, nextIncomplete } from '../data/catalog'
 import { DAILY_GOAL, dailyXpOn, dueVocabIds, type Progress } from '../lib/progress'
 import { navigate } from '../lib/route'
 import { CheckIcon, LockIcon } from './Icons'
@@ -42,6 +41,9 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
                 Review words
               </button>
             )}
+            <button type="button" className="btn-quiet" onClick={() => navigate('/placement')}>
+              Find your level
+            </button>
             <div className="goal" aria-label={`${earnedToday} of ${DAILY_GOAL} XP today`}>
               <div className="goal-row">
                 <span>Daily goal</span>
@@ -71,7 +73,26 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
             </button>
           ) : null}
 
-          {course.map((unit, unitIndex) => {
+          {levels.map((level) => {
+            const levelLessons = level.units.flatMap((unit) => unit.lessons)
+            const levelCleared = levelLessons.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
+            return (
+              <section key={level.id} className="level-block" data-level={level.id}>
+                <header className="level-head">
+                  <div>
+                    <h2>{level.title}</h2>
+                    <p>{level.canDo}</p>
+                    <p className="unit-count">
+                      {levelCleared}/{levelLessons.length} lessons
+                    </p>
+                  </div>
+                  {levelCleared === levelLessons.length ? null : (
+                    <button type="button" className="btn-quiet" onClick={() => navigate(`/test-out/${level.id}`)}>
+                      Test out
+                    </button>
+                  )}
+                </header>
+                {level.units.map((unit, unitIndex) => {
             const cleared = unit.lessons.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
             return (
               <section key={unit.id} className="unit" style={{ '--accent': unit.accent } as CSSProperties}>
@@ -115,6 +136,9 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
                     )
                   })}
                 </div>
+              </section>
+            )
+                })}
               </section>
             )
           })}

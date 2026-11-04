@@ -2,6 +2,8 @@ export type Route =
   | { name: 'path' }
   | { name: 'review' }
   | { name: 'profile' }
+  | { name: 'placement' }
+  | { name: 'test-out'; level: string }
   | { name: 'lesson'; lessonId: string }
 
 export function readRoute(): Route {
@@ -12,6 +14,8 @@ export function readRoute(): Route {
   }
   if (path === '/review') return { name: 'review' }
   if (path === '/profile') return { name: 'profile' }
+  if (path === '/placement') return { name: 'placement' }
+  if (path.startsWith('/test-out/')) return { name: 'test-out', level: decodeURIComponent(path.slice('/test-out/'.length)) }
   return { name: 'path' }
 }
 

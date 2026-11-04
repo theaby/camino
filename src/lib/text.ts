@@ -10,6 +10,20 @@ export function normalize(input: string): string {
     .trim()
 }
 
+/** Conjugation keeps accents: hablé and hable are different forms. */
+export function conjugateMatch(input: string, expected: string, accept: readonly string[] = []): boolean {
+  const fold = (value: string) =>
+    value
+      .trim()
+      .toLowerCase()
+      .replace(/[¿?¡!.,;:'"“”‘’«»]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+  const value = fold(input)
+  if (!value) return false
+  return [expected, ...accept].some((candidate) => fold(candidate) === value)
+}
+
 export function answersMatch(input: string, expected: string, accept: readonly string[] = []): boolean {
   const value = normalize(input)
   if (!value) return false
