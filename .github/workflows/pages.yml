@@ -1,3 +1,4 @@
+# Publishes https://theaby.github.io/camino/
 name: Deploy GitHub Pages
 
 on:
