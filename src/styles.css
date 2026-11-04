@@ -99,6 +99,7 @@ h1, h2, p { overflow-wrap: anywhere; }
   font-weight: 800;
   font-size: 0.92rem;
 }
+button.pill { cursor: pointer; }
 
 .nav {
   position: fixed;
@@ -576,6 +577,52 @@ h1, h2, p { overflow-wrap: anywhere; }
 }
 .shake { animation: shake 0.35s ease; }
 
+.form { display: grid; gap: 12px; margin-top: 8px; }
+.field { display: grid; gap: 6px; font-weight: 800; }
+.field input {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 2px solid var(--line);
+  background: white;
+  padding: 12px 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.form-error, .form-notice {
+  margin: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.form-error { background: var(--coral-soft); color: #8d2e1e; }
+.form-notice { background: var(--green-soft); color: var(--green-deep); }
+.form-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px; }
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+  color: var(--ink-soft);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.btn-google {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 2px solid var(--ink);
+  background: white;
+  font-weight: 800;
+  touch-action: manipulation;
+}
+.btn-google:disabled { opacity: 0.6; }
+.account-email { font-weight: 800; color: var(--ink); overflow-wrap: anywhere; }
 .passage {
   margin: 0 0 14px;
   padding: 14px;

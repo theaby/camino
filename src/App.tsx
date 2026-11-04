@@ -1,5 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { getRedirectResult, onAuthStateChanged, signOut, type User } from 'firebase/auth'
 import { isLessonUnlocked, lessonById, lessonIdsBefore, lessonsInLevel, vocab, vocabForIds } from './data/catalog'
+import { AccountScreen } from './components/AccountScreen'
 import { LevelQuiz } from './components/LevelQuiz'
 import { PathScreen } from './components/PathScreen'
 import { ProfileScreen } from './components/ProfileScreen'
@@ -8,16 +10,16 @@ import { Session } from './components/Session'
 import { FlameIcon, LearnIcon, MarkIcon, PersonIcon, ReviewIcon } from './components/Icons'
 import { buildReviewExercises } from './lib/review'
 import { hashSeed } from './lib/shuffle'
+import { getFirebase } from './lib/firebase'
+import { useSyncedProgress } from './lib/useSyncedProgress'
 import {
   applyLessonResult,
   applyReviewResult,
   dailyXpOn,
   DAILY_GOAL,
   dueVocabIds,
-  loadProgress,
-  resetProgress,
-  saveProgress,
   grantLessons,
+  resetProgress,
   todayISO,
   type Progress,
   type SessionSummary,
@@ -27,14 +29,13 @@ import { placementItems, quizCleared, startingLevel, testOutItems } from './data
 import { CEFR_LEVELS, type CefrLevel } from './data/types'
 
 export function App() {
-  const [progress, setProgress] = useState<Progress>(() => loadProgress())
+  const firebase = getFirebase()
+  const configured = firebase !== null
+  const { user, authReady } = useAuth(configured)
+  const { progress, setProgress, syncState } = useSyncedProgress(user, authReady, configured)
   const [route, setRoute] = useState<Route>(() => readRoute())
   const [attempt, setAttempt] = useState(0)
   const [reviewRun, setReviewRun] = useState<ReturnType<typeof buildReviewExercises> | null>(null)
-
-  useEffect(() => {
-    saveProgress(progress)
-  }, [progress])
 
   useEffect(() => {
     const sync = () => setRoute(readRoute())
@@ -46,7 +47,8 @@ export function App() {
     if (route.name !== 'review') setReviewRun(null)
   }, [route])
 
-  const tab: 'path' | 'review' | 'profile' = route.name === 'review' || route.name === 'profile' ? route.name : 'path'
+  const tab: 'path' | 'review' | 'profile' =
+    route.name === 'review' ? 'review' : route.name === 'profile' || route.name === 'account' ? 'profile' : 'path'
   const today = todayISO()
   const due = dueVocabIds(progress, today).length
   const inLesson = route.name === 'lesson'
@@ -61,11 +63,13 @@ export function App() {
           ? 'Review'
           : route.name === 'profile'
             ? 'You'
-            : route.name === 'placement'
-              ? 'Placement'
-              : route.name === 'test-out'
-                ? 'Test out'
-                : 'Learn'
+            : route.name === 'account'
+              ? 'Account'
+              : route.name === 'placement'
+                ? 'Placement'
+                : route.name === 'test-out'
+                  ? 'Test out'
+                  : 'Learn'
     document.title = `Camino — ${label}`
   }, [route])
 
@@ -97,6 +101,11 @@ export function App() {
                     </span>
                   ) : null}
                   <span className="pill">{dailyXpOn(progress, today)}/{DAILY_GOAL} XP</span>
+                  {configured && authReady && !user ? (
+                    <button type="button" className="pill pill-button" onClick={() => navigate('/account')}>
+                      Sign in
+                    </button>
+                  ) : null}
                 </div>
               </div>
             </header>
@@ -156,8 +165,22 @@ export function App() {
                 <ProfileScreen
                   progress={progress}
                   today={today}
+                  configured={configured}
+                  email={user?.email ?? null}
+                  syncState={syncState}
                   onToggleSound={() => setProgress((current) => ({ ...current, sound: !current.sound }))}
                   onReset={() => setProgress((current) => resetProgress(current))}
+                  onSignOut={() => {
+                    if (firebase) void signOut(firebase.auth)
+                  }}
+                />
+              ) : null}
+              {route.name === 'account' ? (
+                <AccountScreen
+                  mode={route.mode}
+                  configured={configured}
+                  auth={firebase?.auth ?? null}
+                  onSignedIn={() => navigate('/')}
                 />
               ) : null}
             </main>
@@ -249,6 +272,26 @@ function LessonRoute({
       onRetry={onRetry}
     />
   )
+}
+
+function useAuth(configured: boolean): { user: User | null; authReady: boolean } {
+  const [user, setUser] = useState<User | null>(null)
+  const [authReady, setAuthReady] = useState(!configured)
+
+  useEffect(() => {
+    const firebase = getFirebase()
+    if (!firebase) {
+      setAuthReady(true)
+      return
+    }
+    void getRedirectResult(firebase.auth).catch(() => undefined)
+    return onAuthStateChanged(firebase.auth, (next) => {
+      setUser(next)
+      setAuthReady(true)
+    })
+  }, [configured])
+
+  return { user, authReady }
 }
 
 function TestOut({ level, onPass, onCancel }: { level: string; onPass: (ids: string[]) => void; onCancel: () => void }) {
