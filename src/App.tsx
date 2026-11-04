@@ -11,6 +11,7 @@ import { FlameIcon, LearnIcon, MarkIcon, PersonIcon, ReviewIcon } from './compon
 import { buildReviewExercises } from './lib/review'
 import { hashSeed } from './lib/shuffle'
 import { getFirebase } from './lib/firebase'
+import { userInitials } from './lib/initials'
 import { useSyncedProgress } from './lib/useSyncedProgress'
 import {
   applyLessonResult,
@@ -78,10 +79,7 @@ export function App() {
       {focused ? null : (
         <div className="frame">
           <nav className="nav" aria-label="Primary">
-            <div className="nav-brand">
-              <MarkIcon className="mark" />
-              <span>Camino</span>
-            </div>
+            <HomeMark className="nav-brand" />
             <NavButton name="path" current={tab} icon={<LearnIcon />} label="Learn" />
             <NavButton name="review" current={tab} icon={<ReviewIcon />} label="Review" badge={due} />
             <NavButton name="profile" current={tab} icon={<PersonIcon />} label="You" />
@@ -89,23 +87,23 @@ export function App() {
           <div className="content">
             <header className="topbar">
               <div className="topbar-inner">
-                <div className="brand">
-                  <MarkIcon className="mark" />
-                  <span>Camino</span>
-                </div>
-                <div className="pills">
-                  {progress.streak > 0 ? (
-                    <span className="pill">
-                      <FlameIcon className="flame" />
-                      {progress.streak} day streak
-                    </span>
-                  ) : null}
-                  <span className="pill">{dailyXpOn(progress, today)}/{DAILY_GOAL} XP</span>
-                  {configured && authReady && !user ? (
-                    <button type="button" className="pill pill-button" onClick={() => navigate('/account')}>
-                      Sign in
-                    </button>
-                  ) : null}
+                <HomeMark className="brand" />
+                <div className="topbar-tools">
+                  <div className="pills">
+                    {progress.streak > 0 ? (
+                      <span className="pill">
+                        <FlameIcon className="flame" />
+                        {progress.streak} day streak
+                      </span>
+                    ) : null}
+                    <span className="pill">{dailyXpOn(progress, today)}/{DAILY_GOAL} XP</span>
+                    {configured && authReady && !user ? (
+                      <button type="button" className="pill pill-button" onClick={() => navigate('/account')}>
+                        Sign in
+                      </button>
+                    ) : null}
+                  </div>
+                  {user ? <UserAvatar user={user} /> : null}
                 </div>
               </div>
             </header>
@@ -325,6 +323,31 @@ function TestOut({ level, onPass, onCancel }: { level: string; onPass: (ids: str
       }}
       onCancel={onCancel}
     />
+  )
+}
+
+function HomeMark({ className }: { className: string }) {
+  return (
+    <button type="button" className={className} aria-label="Camino, learning path" onClick={() => navigate('/')}>
+      <MarkIcon className="mark" />
+      <span>Camino</span>
+    </button>
+  )
+}
+
+function UserAvatar({ user }: { user: User }) {
+  const photo = user.photoURL?.trim() ?? ''
+  const [failed, setFailed] = useState<string | null>(null)
+  const showPhoto = photo.length > 0 && failed !== photo
+  const who = user.displayName?.trim() || user.email || 'signed in'
+  return (
+    <button type="button" className="avatar" aria-label={`Account for ${who}`} onClick={() => navigate('/profile')}>
+      {showPhoto ? (
+        <img src={photo} alt="" referrerPolicy="no-referrer" onError={() => setFailed(photo)} />
+      ) : (
+        <span aria-hidden="true">{userInitials(user)}</span>
+      )}
+    </button>
   )
 }
 
