@@ -15,7 +15,7 @@ import {
   XP_LESSON_BONUS,
 } from './progress'
 import { buildReviewExercises } from './review'
-import { answersMatch, normalize, speakMatch } from './text'
+import { answersMatch, conjugateMatch, markAnswer, normalize, speakMatch } from './text'
 
 describe('answers', () => {
   it('ignores accents, case, and Spanish punctuation', () => {
@@ -23,6 +23,32 @@ describe('answers', () => {
     expect(answersMatch('adios', 'Adiós')).toBe(true)
     expect(answersMatch('la estacion', 'estación', ['la estación'])).toBe(true)
     expect(answersMatch('hola amigo', 'adiós')).toBe(false)
+    expect(conjugateMatch('hablé', 'hablé')).toBe(true)
+    expect(conjugateMatch('hable', 'hablé')).toBe(false)
+  })
+
+  it('accepts a missing accent and flags it, and keeps ñ distinct from n', () => {
+    expect(markAnswer('hablé', 'hablé')).toEqual({ match: true, missingMark: false })
+    expect(markAnswer('hable', 'hablé')).toEqual({ match: true, missingMark: true })
+    expect(markAnswer('como', 'como')).toEqual({ match: true, missingMark: false })
+    expect(markAnswer('Mexico', 'México')).toEqual({ match: true, missingMark: true })
+    expect(markAnswer('comí', 'hablé').match).toBe(false)
+    expect(markAnswer('niño', 'niño')).toEqual({ match: true, missingMark: false })
+    expect(markAnswer('nino', 'niño')).toEqual({ match: false, missingMark: false })
+    expect(markAnswer('ano', 'año')).toEqual({ match: false, missingMark: false })
+    const flagged = settleExercise(
+      { id: 't', type: 'conjugate', prompt: 'yo (hablar)', answer: 'hablé', vocabIds: ['hable'] },
+      { kind: 'conjugate', value: 'hable' },
+    )
+    expect(flagged.correct).toBe(true)
+    expect(flagged.heart).toBe(false)
+    expect(flagged.note).toMatch(/accent/)
+    const exact = settleExercise(
+      { id: 't2', type: 'type', direction: 'en-es', prompt: 'station', answer: 'estación', vocabIds: ['estacion'] },
+      { kind: 'type', value: 'estación' },
+    )
+    expect(exact.correct).toBe(true)
+    expect(exact.note).toBeUndefined()
   })
 
   it('accepts a heard phrase with extra words', () => {
@@ -158,7 +184,21 @@ describe('course', () => {
         if (exercise.type === 'match') expect(exercise.pairs).toHaveLength(4)
       }
     }
-    expect([...types].sort()).toEqual(['bank', 'choice', 'listen', 'match', 'speak', 'type'])
+    expect([...types].sort()).toEqual(['bank', 'choice', 'conjugate', 'listen', 'match', 'read', 'speak', 'type'])
+    expect(lessons.slice(0, 12).map((lesson) => lesson.id)).toEqual([
+      'greetings-hello',
+      'greetings-how',
+      'numbers-1',
+      'numbers-2',
+      'food-drinks',
+      'food-table',
+      'family-members',
+      'family-have',
+      'travel-places',
+      'travel-move',
+      'daily-me',
+      'daily-time',
+    ])
     for (const entry of vocab) expect(used.has(entry.id), entry.id).toBe(true)
     expect(isLessonUnlocked(lessons[0]!.id, [])).toBe(true)
     expect(isLessonUnlocked(lessons[1]!.id, [])).toBe(false)

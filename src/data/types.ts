@@ -60,6 +60,11 @@ export type ListenExercise = {
   answer: string
   vocabIds: string[]
   tip?: string
+  /** DELE-style task label, e.g. "Audición · Mensaje". */
+  task?: string
+  /** Specific question. When set, it replaces "What does this mean?" */
+  question?: string
+  questionLang?: 'en' | 'es'
 }
 
 export type SpeakExercise = {
@@ -71,6 +76,30 @@ export type SpeakExercise = {
   tip?: string
 }
 
+export type ReadExercise = {
+  id: string
+  type: 'read'
+  passage: string
+  question: string
+  questionLang?: 'en' | 'es'
+  options: string[]
+  answer: string
+  vocabIds: string[]
+  tip?: string
+  /** DELE-style task label, e.g. "Lectura · Cartel". */
+  task?: string
+}
+
+export type ConjugateExercise = {
+  id: string
+  type: 'conjugate'
+  prompt: string
+  answer: string
+  accept?: string[]
+  vocabIds: string[]
+  tip?: string
+}
+
 export type Exercise =
   | ChoiceExercise
   | BankExercise
@@ -78,6 +107,18 @@ export type Exercise =
   | MatchExercise
   | ListenExercise
   | SpeakExercise
+  | ReadExercise
+  | ConjugateExercise
+
+export const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1'] as const
+export type CefrLevel = (typeof CEFR_LEVELS)[number]
+
+export type Level = {
+  id: CefrLevel
+  title: string
+  canDo: string
+  units: Unit[]
+}
 
 export type Lesson = {
   id: string

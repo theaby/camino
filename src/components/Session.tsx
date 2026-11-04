@@ -271,6 +271,7 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
                   <p className="feedback-line" lang="es">
                     {result.line}
                   </p>
+                  {result.note ? <p className="feedback-note">{result.note}</p> : null}
                   {result.heart && heartsEnabled ? <p className="feedback-heart">−1 heart</p> : null}
                 </div>
               ) : (
@@ -320,9 +321,15 @@ function promptFor(exercise: Exercise): { text: string; lang?: string } | null {
     case 'match':
       return { text: exercise.prompt, lang: 'en' }
     case 'listen':
-      return { text: 'What does this mean?', lang: 'en' }
+      return exercise.question
+        ? { text: exercise.question, lang: exercise.questionLang ?? 'en' }
+        : { text: 'What does this mean?', lang: 'en' }
     case 'speak':
       return null
+    case 'read':
+      return { text: exercise.question, lang: exercise.questionLang ?? 'en' }
+    case 'conjugate':
+      return { text: exercise.prompt, lang: 'es' }
   }
 }
 
@@ -334,6 +341,14 @@ function footerHint(exercise: Exercise): string {
       return 'Speak, then check. Or skip if the mic is unavailable.'
     case 'bank':
       return 'Tap words to build the sentence.'
+    case 'read':
+      return 'Read the passage, then answer.'
+    case 'type':
+      return exercise.direction === 'en-es'
+        ? 'Type the Spanish. A missing accent still counts, and we will flag it. ñ has to be ñ.'
+        : 'Type the English, then check.'
+    case 'conjugate':
+      return 'Type the form. A missing accent still counts, and we will flag it. ñ has to be ñ.'
     default:
       return 'Choose an answer, then check.'
   }
@@ -342,7 +357,8 @@ function footerHint(exercise: Exercise): string {
 function canCheck(draft: Draft | null): boolean {
   if (!draft || draft.kind === 'match' || draft.kind === 'speak-skip') return false
   if (draft.kind === 'bank') return draft.values.length > 0
-  if (draft.kind === 'type') return draft.value.trim().length > 0
+  if (draft.kind === 'type' || draft.kind === 'conjugate') return draft.value.trim().length > 0
+  if (draft.kind === 'read') return draft.value.length > 0
   if (draft.kind === 'speak') return draft.transcript.trim().length > 0
   return draft.value.length > 0
 }

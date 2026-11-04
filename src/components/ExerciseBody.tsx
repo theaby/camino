@@ -29,6 +29,12 @@ export function ExerciseBody({ exercise, disabled, revealed, onDraft, onSkip, on
       {exercise.type === 'type' ? (
         <TypeExercise exercise={exercise} disabled={disabled} onDraft={onDraft} onRequestCheck={onRequestCheck} />
       ) : null}
+      {exercise.type === 'read' ? (
+        <ReadExercise exercise={exercise} revealed={revealed} disabled={disabled} onDraft={onDraft} />
+      ) : null}
+      {exercise.type === 'conjugate' ? (
+        <ConjugateExercise exercise={exercise} disabled={disabled} onDraft={onDraft} onRequestCheck={onRequestCheck} />
+      ) : null}
       {exercise.type === 'match' ? <MatchExercise exercise={exercise} onDraft={onDraft} /> : null}
       {exercise.type === 'speak' ? (
         <SpeakExercise exercise={exercise} disabled={disabled} onDraft={onDraft} onSkip={onSkip} />
@@ -294,6 +300,93 @@ function MatchExercise({
         </div>
       </div>
     </>
+  )
+}
+
+function ReadExercise({
+  exercise,
+  revealed,
+  disabled,
+  onDraft,
+}: {
+  exercise: Extract<Exercise, { type: 'read' }>
+  revealed: Settlement | null
+  disabled: boolean
+  onDraft: (draft: Draft | null) => void
+}) {
+  const options = useMemo(() => shuffle(exercise.options, hashSeed(exercise.id)), [exercise.id, exercise.options])
+  const [selected, setSelected] = useState<string | null>(null)
+  const showResult = Boolean(revealed && !revealed.skipped)
+  return (
+    <>
+      <article className="passage" lang="es">
+        {exercise.passage}
+      </article>
+      <div className="options" role="group" aria-label="Answers">
+        {options.map((option) => {
+          const isSelected = selected === option
+          const isAnswer = showResult && option === exercise.answer
+          const isWrong = showResult && isSelected && option !== exercise.answer
+          return (
+            <button
+              key={option}
+              type="button"
+              className="option"
+              lang={exercise.questionLang === 'es' ? 'es' : undefined}
+              aria-pressed={isSelected}
+              data-correct={isAnswer ? 'true' : 'false'}
+              data-wrong={isWrong ? 'true' : 'false'}
+              disabled={disabled}
+              onClick={() => {
+                setSelected(option)
+                onDraft({ kind: 'read', value: option })
+              }}
+            >
+              {option}
+            </button>
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+function ConjugateExercise({
+  exercise,
+  disabled,
+  onDraft,
+  onRequestCheck,
+}: {
+  exercise: Extract<Exercise, { type: 'conjugate' }>
+  disabled: boolean
+  onDraft: (draft: Draft | null) => void
+  onRequestCheck: () => void
+}) {
+  const [value, setValue] = useState('')
+  return (
+    <input
+      className="type-input"
+      lang="es"
+      value={value}
+      disabled={disabled}
+      autoCapitalize="off"
+      autoCorrect="off"
+      autoComplete="off"
+      spellCheck={false}
+      enterKeyHint="done"
+      placeholder="Type the verb form"
+      aria-label={`Verb form for ${exercise.prompt}`}
+      onChange={(event) => {
+        setValue(event.target.value)
+        onDraft(event.target.value.trim() ? { kind: 'conjugate', value: event.target.value } : null)
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault()
+          onRequestCheck()
+        }
+      }}
+    />
   )
 }
 
