@@ -1,5 +1,7 @@
 # Curriculum map
 
+This is the course map for Camino, published at <https://theaby.github.io/camino/>.
+
 Camino’s path follows the CEFR bands A1–C1. Topic labels come from the Instituto Cervantes *Plan curricular* (PCIC), using the public index at [cvc.cervantes.es](https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm). Section numbers below are that index’s numbers: grammar is inventory 2, functions are inventory 5, general notions are inventory 8, and specific notions are inventory 9.
 
 ## How the mapping was done

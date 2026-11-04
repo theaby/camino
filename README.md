@@ -1,10 +1,10 @@
-# Camino — Learn Spanish
+# Camino
 
-A small, installable web app for total beginners who want to speak and read Spanish a little every day. Lessons run in the browser. Without a Firebase project, progress stays in `localStorage` on that device. With Firebase configured, people can sign in and keep the same XP, streak, finished lessons, and review words on every device. Guest practice still works, and the first sign-in on a device folds that guest progress into the account.
+A small, installable web app for speaking and reading Spanish a little every day. Lessons run in the browser. Without a Firebase project, progress stays in `localStorage` on that device. With Firebase configured, people can sign in and keep the same XP, streak, finished lessons, and review words on every device. Guest practice still works, and the first sign-in on a device folds that guest progress into the account.
 
 The course is a path of short lessons (about ten exercises): multiple choice, word banks, typing, matching, listening (Spanish text-to-speech), and speaking (speech recognition, with a skip when the browser cannot do it).
 
-Live site, after GitHub Pages is enabled: <https://theaby.github.io/learn-spanish/>
+Live site: <https://theaby.github.io/camino/>. The previous address, <https://theaby.github.io/learn-spanish/>, no longer works. The source is <https://github.com/theaby/camino>.
 
 ## Run locally
 
@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-Open the URL Vite prints. The app is served under `/learn-spanish/` so asset paths match GitHub Pages, for example `http://localhost:5173/learn-spanish/`.
+Open the URL Vite prints. The app is served under `/camino/` so asset paths match GitHub Pages, for example `http://localhost:5173/camino/`.
 
 ```bash
 npm test
@@ -76,7 +76,7 @@ In another terminal:
 npm run dev:emulator
 ```
 
-Open the printed URL (`/learn-spanish/`). The Auth emulator is on port 9099 and Firestore on 8080. Password-reset emails show up in the emulator UI at <http://127.0.0.1:4000>, not in a real inbox.
+Open the printed URL (`/camino/`). The Auth emulator is on port 9099 and Firestore on 8080. Password-reset emails show up in the emulator UI at <http://127.0.0.1:4000>, not in a real inbox.
 
 ```bash
 npm test
@@ -102,18 +102,10 @@ npx firebase deploy --only firestore:rules
 
 To point a build at a different Firebase project, set all four of `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`. Optional: `VITE_FIREBASE_STORAGE_BUCKET` and `VITE_FIREBASE_MESSAGING_SENDER_ID`. Copy [`.env.example`](.env.example) to `.env.local` for a local override, and do not set `VITE_FIREBASE_USE_EMULATOR` in that file. The same names can be GitHub Actions variables; the Pages workflow passes them through, and a blank variable leaves the committed config in place.
 
-After the Pages workflow goes green, sign-up on <https://theaby.github.io/learn-spanish/> uses `camino-ce661`. A guest who already practiced on that browser keeps those lessons when they create an account.
+Sign-up on <https://theaby.github.io/camino/> uses `camino-ce661`. A guest who already practiced on that browser keeps those lessons when they create an account.
 
 ## GitHub Pages
 
-Pushes to `main` run [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which builds `dist` and deploys it with GitHub Actions.
-
-One setting is not stored in the repo. A repo admin needs to turn Pages on once:
-
-1. Open the repository **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Merge this project to `main` (or run the workflow) and wait until the deploy job is green.
-
-The site is then <https://theaby.github.io/learn-spanish/>. The Vite `base` in `vite.config.ts` is `/learn-spanish/`. If the repository name changes, update that `base` (and the manifest `start_url` / `scope`) to the new path. The production build includes the `camino-ce661` web config. The Pages workflow still passes `VITE_FIREBASE_*` repository variables through, and a complete set replaces that config.
+Pushes to `main` run [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which builds `dist` and deploys it with GitHub Actions. The site is <https://theaby.github.io/camino/>. The Vite `base` in `vite.config.ts` is `/camino/`, and the manifest `start_url` and `scope` use that same path. The production build includes the `camino-ce661` web config. The Pages workflow still passes `VITE_FIREBASE_*` repository variables through, and a complete set replaces that config.
 
 Pages on the free plan needs a public repository. Speech recognition is best in Chrome or Edge. Safari and Firefox can still play Spanish audio, and every speaking exercise can be skipped without losing a heart. After the first visit, the service worker caches the app for offline use.
