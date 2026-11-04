@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { lessonIdsBefore, lessonsInLevel } from '../data/catalog'
 import { emptyProgress, grantLessons, type Progress } from './progress'
 import { firebaseConfigFrom, guestContribution, mergeAccount } from './account'
+import { resolveFirebaseConfig } from './firebase-config'
 
 function progress(partial: Partial<Progress>): Progress {
   return { ...emptyProgress(), ...partial }
@@ -19,6 +20,35 @@ describe('firebase config', () => {
         VITE_FIREBASE_APP_ID: '1:web',
       })?.projectId,
     ).toBe('p')
+  })
+
+  it('uses the committed project in production and lets a full env override it', () => {
+    expect(resolveFirebaseConfig({}, false)).toBeNull()
+    expect(resolveFirebaseConfig({}, true)?.projectId).toBe('camino-ce661')
+    expect(resolveFirebaseConfig({ VITE_FIREBASE_API_KEY: '' }, true)?.projectId).toBe('camino-ce661')
+    expect(
+      resolveFirebaseConfig(
+        {
+          VITE_FIREBASE_API_KEY: 'k',
+          VITE_FIREBASE_AUTH_DOMAIN: 'app.firebaseapp.com',
+          VITE_FIREBASE_PROJECT_ID: 'other',
+          VITE_FIREBASE_APP_ID: '1:web',
+        },
+        true,
+      )?.projectId,
+    ).toBe('other')
+    expect(
+      resolveFirebaseConfig(
+        {
+          VITE_FIREBASE_API_KEY: 'demo-api-key',
+          VITE_FIREBASE_AUTH_DOMAIN: '127.0.0.1',
+          VITE_FIREBASE_PROJECT_ID: 'demo-camino',
+          VITE_FIREBASE_APP_ID: '1:0:web:demo',
+          VITE_FIREBASE_USE_EMULATOR: 'true',
+        },
+        false,
+      )?.projectId,
+    ).toBe('demo-camino')
   })
 })
 
