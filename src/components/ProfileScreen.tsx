@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { allLessons } from '../data/catalog'
+import type { SyncState } from '../lib/useSyncedProgress'
 import { dailyXpOn, DAILY_GOAL, dueVocabIds, type Progress } from '../lib/progress'
+import { navigate } from '../lib/route'
 
 type InstallPrompt = Event & {
   prompt: () => Promise<void>
@@ -10,11 +12,15 @@ type InstallPrompt = Event & {
 type Props = {
   progress: Progress
   today: string
+  configured: boolean
+  email: string | null
+  syncState: SyncState
   onToggleSound: () => void
   onReset: () => void
+  onSignOut: () => void
 }
 
-export function ProfileScreen({ progress, today, onToggleSound, onReset }: Props) {
+export function ProfileScreen({ progress, today, configured, email, syncState, onToggleSound, onReset, onSignOut }: Props) {
   const [confirming, setConfirming] = useState(false)
   const [install, setInstall] = useState<InstallPrompt | null>(null)
   const lessons = allLessons().length
@@ -32,8 +38,9 @@ export function ProfileScreen({ progress, today, onToggleSound, onReset }: Props
   return (
     <div className="panel">
       <p className="kicker">You</p>
-      <h1>On this device</h1>
-      <p className="lede">Camino doesn’t have an account. Your streak, XP, and review words stay in this browser.</p>
+      <h1>{email ? 'Your account' : 'On this device'}</h1>
+      <p className="lede">{profileLede(configured, email)}</p>
+      <AccountCard configured={configured} email={email} syncState={syncState} onSignOut={onSignOut} />
       <div className="stats">
         <Stat label="Streak" value={progress.streak === 1 ? '1 day' : `${progress.streak} days`} />
         <Stat label="XP" value={String(progress.xp)} />
@@ -73,7 +80,11 @@ export function ProfileScreen({ progress, today, onToggleSound, onReset }: Props
       </section>
       <section className="panel-card">
         <h2>Reset</h2>
-        <p>Clears XP, the streak, finished lessons, and review words on this device.</p>
+        <p>
+          {email
+            ? 'Clears XP, the streak, finished lessons, and review words on your account.'
+            : 'Clears XP, the streak, finished lessons, and review words on this device.'}
+        </p>
         {confirming ? (
           <div className="row-actions">
             <button type="button" className="btn-danger" onClick={onReset}>
@@ -90,6 +101,53 @@ export function ProfileScreen({ progress, today, onToggleSound, onReset }: Props
         )}
       </section>
     </div>
+  )
+}
+
+function profileLede(configured: boolean, email: string | null): string {
+  if (email) return 'This progress is saved to your account and follows you onto your other devices.'
+  if (configured) return 'You’re practicing as a guest. Progress stays in this browser until you sign in.'
+  return 'Camino doesn’t have an account. Your streak, XP, and review words stay in this browser.'
+}
+
+function syncCopy(syncState: SyncState): string {
+  if (syncState === 'synced') return 'Synced to your account.'
+  if (syncState === 'loading') return 'Signing you in…'
+  return 'Saved on this device. Changes sync when you’re back online.'
+}
+
+function AccountCard({
+  configured,
+  email,
+  syncState,
+  onSignOut,
+}: {
+  configured: boolean
+  email: string | null
+  syncState: SyncState
+  onSignOut: () => void
+}) {
+  if (!configured) return null
+  if (!email) {
+    return (
+      <section className="panel-card">
+        <h2>Save an account</h2>
+        <p>Sign in to keep the same lessons, streak, and review words on your phone and your computer.</p>
+        <button type="button" className="btn-primary" onClick={() => navigate('/account')}>
+          Sign in
+        </button>
+      </section>
+    )
+  }
+  return (
+    <section className="panel-card" data-sync={syncState}>
+      <h2>Signed in</h2>
+      <p className="account-email">{email}</p>
+      <p>{syncCopy(syncState)}</p>
+      <button type="button" className="btn-quiet" onClick={onSignOut}>
+        Sign out
+      </button>
+    </section>
   )
 }
 

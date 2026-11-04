@@ -1,6 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { getRedirectResult, onAuthStateChanged, signOut, type User } from 'firebase/auth'
 import { lessonById, vocabForIds } from './data/catalog'
 import { vocab } from './data/course'
+import { AccountScreen } from './components/AccountScreen'
 import { PathScreen } from './components/PathScreen'
 import { ProfileScreen } from './components/ProfileScreen'
 import { ReviewScreen } from './components/ReviewScreen'
@@ -8,15 +10,15 @@ import { Session } from './components/Session'
 import { FlameIcon, LearnIcon, MarkIcon, PersonIcon, ReviewIcon } from './components/Icons'
 import { buildReviewExercises } from './lib/review'
 import { hashSeed } from './lib/shuffle'
+import { getFirebase } from './lib/firebase'
+import { useSyncedProgress } from './lib/useSyncedProgress'
 import {
   applyLessonResult,
   applyReviewResult,
   dailyXpOn,
   DAILY_GOAL,
   dueVocabIds,
-  loadProgress,
   resetProgress,
-  saveProgress,
   todayISO,
   type Progress,
   type SessionSummary,
@@ -25,14 +27,13 @@ import { isLessonUnlocked } from './data/catalog'
 import { navigate, readRoute, type Route } from './lib/route'
 
 export function App() {
-  const [progress, setProgress] = useState<Progress>(() => loadProgress())
+  const firebase = getFirebase()
+  const configured = firebase !== null
+  const { user, authReady } = useAuth(configured)
+  const { progress, setProgress, syncState } = useSyncedProgress(user, authReady, configured)
   const [route, setRoute] = useState<Route>(() => readRoute())
   const [attempt, setAttempt] = useState(0)
   const [reviewRun, setReviewRun] = useState<ReturnType<typeof buildReviewExercises> | null>(null)
-
-  useEffect(() => {
-    saveProgress(progress)
-  }, [progress])
 
   useEffect(() => {
     const sync = () => setRoute(readRoute())
@@ -52,7 +53,15 @@ export function App() {
 
   useEffect(() => {
     const label =
-      route.name === 'lesson' ? 'Lesson' : route.name === 'review' ? 'Review' : route.name === 'profile' ? 'You' : 'Learn'
+      route.name === 'lesson'
+        ? 'Lesson'
+        : route.name === 'review'
+          ? 'Review'
+          : route.name === 'profile'
+            ? 'You'
+            : route.name === 'account'
+              ? 'Account'
+              : 'Learn'
     document.title = `Camino — ${label}`
   }, [route])
 
@@ -65,9 +74,9 @@ export function App() {
               <MarkIcon className="mark" />
               <span>Camino</span>
             </div>
-            <NavButton name="path" current={route.name} icon={<LearnIcon />} label="Learn" />
-            <NavButton name="review" current={route.name} icon={<ReviewIcon />} label="Review" badge={due} />
-            <NavButton name="profile" current={route.name} icon={<PersonIcon />} label="You" />
+            <NavButton name="path" current={route.name === 'account' ? 'profile' : route.name} icon={<LearnIcon />} label="Learn" />
+            <NavButton name="review" current={route.name === 'account' ? 'profile' : route.name} icon={<ReviewIcon />} label="Review" badge={due} />
+            <NavButton name="profile" current={route.name === 'account' ? 'profile' : route.name} icon={<PersonIcon />} label="You" />
           </nav>
           <div className="content">
             <header className="topbar">
@@ -84,6 +93,11 @@ export function App() {
                     </span>
                   ) : null}
                   <span className="pill">{dailyXpOn(progress, today)}/{DAILY_GOAL} XP</span>
+                  {configured && authReady && !user ? (
+                    <button type="button" className="pill pill-button" onClick={() => navigate('/account')}>
+                      Sign in
+                    </button>
+                  ) : null}
                 </div>
               </div>
             </header>
@@ -109,8 +123,22 @@ export function App() {
                 <ProfileScreen
                   progress={progress}
                   today={today}
+                  configured={configured}
+                  email={user?.email ?? null}
+                  syncState={syncState}
                   onToggleSound={() => setProgress((current) => ({ ...current, sound: !current.sound }))}
                   onReset={() => setProgress((current) => resetProgress(current))}
+                  onSignOut={() => {
+                    if (firebase) void signOut(firebase.auth)
+                  }}
+                />
+              ) : null}
+              {route.name === 'account' ? (
+                <AccountScreen
+                  mode={route.mode}
+                  configured={configured}
+                  auth={firebase?.auth ?? null}
+                  onSignedIn={() => navigate('/')}
                 />
               ) : null}
             </main>
@@ -202,6 +230,26 @@ function LessonRoute({
       onRetry={onRetry}
     />
   )
+}
+
+function useAuth(configured: boolean): { user: User | null; authReady: boolean } {
+  const [user, setUser] = useState<User | null>(null)
+  const [authReady, setAuthReady] = useState(!configured)
+
+  useEffect(() => {
+    const firebase = getFirebase()
+    if (!firebase) {
+      setAuthReady(true)
+      return
+    }
+    void getRedirectResult(firebase.auth).catch(() => undefined)
+    return onAuthStateChanged(firebase.auth, (next) => {
+      setUser(next)
+      setAuthReady(true)
+    })
+  }, [configured])
+
+  return { user, authReady }
 }
 
 function NavButton({
