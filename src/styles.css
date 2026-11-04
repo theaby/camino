@@ -84,6 +84,38 @@ h1, h2, p { overflow-wrap: anywhere; }
   font-weight: 800;
   letter-spacing: -0.02em;
 }
+button.brand, button.nav-brand {
+  border: 0;
+  background: none;
+  color: inherit;
+  min-height: 44px;
+}
+button.brand { padding: 0; }
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+  margin-left: auto;
+}
+.avatar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  padding: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: white;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
 .mark { width: 32px; height: 32px; flex: none; }
 .flame { width: 18px; height: 18px; }
 .pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }

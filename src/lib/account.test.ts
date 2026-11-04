@@ -3,6 +3,7 @@ import { lessonIdsBefore, lessonsInLevel } from '../data/catalog'
 import { emptyProgress, grantLessons, type Progress } from './progress'
 import { firebaseConfigFrom, guestContribution, mergeAccount } from './account'
 import { resolveFirebaseConfig } from './firebase-config'
+import { userInitials } from './initials'
 
 function progress(partial: Partial<Progress>): Progress {
   return { ...emptyProgress(), ...partial }
@@ -49,6 +50,17 @@ describe('firebase config', () => {
         false,
       )?.projectId,
     ).toBe('demo-camino')
+  })
+})
+
+describe('account initials', () => {
+  it('uses the name, then the email', () => {
+    expect(userInitials({ displayName: 'Jane Doe', email: 'other@camino.test' })).toBe('JD')
+    expect(userInitials({ displayName: 'Mathew', email: 'jane.doe@camino.test' })).toBe('M')
+    expect(userInitials({ displayName: '  ', email: 'jane.doe@camino.test' })).toBe('JD')
+    expect(userInitials({ email: 'mathew@camino.test' })).toBe('M')
+    expect(userInitials({ email: 'jane.doe.smith@camino.test' })).toBe('JS')
+    expect(userInitials({})).toBe('')
   })
 })
 
