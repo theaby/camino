@@ -57,7 +57,9 @@ A typed answer that leaves out an accent still counts, and the lesson says so. `
 
 ## Accounts with Firebase
 
-Camino uses the Firebase Spark (free) plan: Authentication (email/password and Google) and one Cloud Firestore document per person at `users/{uid}`. That document is the same progress record as guest mode: XP, streak, finished lesson ids, and review words. Placement and test-out only add lesson ids, and those ids are written to the same document. The first sign-in folds the guest record in, including those ids, without adding XP for a lesson that was granted rather than played. Later sign-ins add only what changed on the device. Hearts are only for the lesson you’re in, so they are not stored. The web config is public by design. If those values are missing at build time, the app stays in guest-only mode and does not call Firebase.
+Camino uses the Firebase Spark (free) plan: Authentication (email/password and Google) and one Cloud Firestore document per person at `users/{uid}`. That document is the same progress record as guest mode: XP, streak, finished lesson ids, and review words. Placement and test-out only add lesson ids, and those ids are written to the same document. The first sign-in folds the guest record in, including those ids, without adding XP for a lesson that was granted rather than played. Later sign-ins add only what changed on the device. Hearts are only for the lesson you’re in, so they are not stored.
+
+The public web config for project `camino-ce661` lives in [`src/lib/firebase-config.ts`](src/lib/firebase-config.ts). Production builds use it. A complete `VITE_FIREBASE_*` set, from the environment or from GitHub Actions variables, replaces it. `npm run dev` without those variables stays guest-only. `npm run dev:emulator` still talks to the local emulators.
 
 ### Try it locally with the emulators
 
@@ -83,27 +85,24 @@ npm run test:rules
 
 `test:rules` starts the Firestore emulator and checks that a signed-in user can only read and write `users/{their uid}`.
 
-### Create the real Firebase project
+### Project camino-ce661
 
-1. Open the [Firebase console](https://console.firebase.google.com/) and create a project. The Spark plan is enough. Leave Google Analytics off if you don’t want it.
-2. In the project, go to **Build → Authentication → Get started**. Under **Sign-in method**, enable **Email/Password** (the first switch only) and **Google**.
-3. Still in Authentication, open **Settings → Authorized domains** and add `theaby.github.io`. `localhost` is already there.
-4. Go to **Build → Firestore Database → Create database**. Pick a region close to you. Start in **production mode**. The checked-in rules replace the default lock-down when you deploy them.
-5. Go to **Project settings → General → Your apps**. Add a **Web** app. You do not need Firebase Hosting. Copy the config values (`apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`).
-6. Put those values where the build can see them.
-   - On your machine, copy [`.env.example`](.env.example) to `.env.local` and fill in the `VITE_FIREBASE_*` lines. Do not set `VITE_FIREBASE_USE_EMULATOR` for this file.
-   - For GitHub Pages, open the repository **Settings → Secrets and variables → Actions → Variables** and add the same names: `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, and `VITE_FIREBASE_APP_ID`. The next push to `main` bakes them into the site. They are not secrets; Firebase expects them in the client.
-7. Point the Firebase CLI at the real project and deploy the rules in [`firestore.rules`](firestore.rules):
+The Firebase project already exists. Production builds sign in against it without any Actions variables. On that project:
+
+1. **Build → Authentication → Sign-in method**: Email/Password (the first switch only) and Google.
+2. **Authentication → Settings → Authorized domains**: `theaby.github.io`. `localhost` is already there.
+3. **Build → Firestore Database**: a database in production mode. Deploy the checked-in rules so they replace the default lock-down:
 
 ```bash
 npx firebase login
-npx firebase use --add
 npx firebase deploy --only firestore:rules
 ```
 
-`firebase use --add` should select the project you just created, not `demo-camino`. `demo-camino` is only for the emulators.
+[`.firebaserc`](.firebaserc) sets the default project to `camino-ce661`, so that deploy targets it. `demo-camino` is only the emulator project used by `npm run dev:emulator` and `npm run test:rules`.
 
-After the Pages workflow goes green, sign-up on <https://theaby.github.io/learn-spanish/> uses the real project. A guest who already practiced on that browser keeps those lessons when they create an account.
+To point a build at a different Firebase project, set all four of `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`. Optional: `VITE_FIREBASE_STORAGE_BUCKET` and `VITE_FIREBASE_MESSAGING_SENDER_ID`. Copy [`.env.example`](.env.example) to `.env.local` for a local override, and do not set `VITE_FIREBASE_USE_EMULATOR` in that file. The same names can be GitHub Actions variables; the Pages workflow passes them through, and a blank variable leaves the committed config in place.
+
+After the Pages workflow goes green, sign-up on <https://theaby.github.io/learn-spanish/> uses `camino-ce661`. A guest who already practiced on that browser keeps those lessons when they create an account.
 
 ## GitHub Pages
 
@@ -115,6 +114,6 @@ One setting is not stored in the repo. A repo admin needs to turn Pages on once:
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
 3. Merge this project to `main` (or run the workflow) and wait until the deploy job is green.
 
-The site is then <https://theaby.github.io/learn-spanish/>. The Vite `base` in `vite.config.ts` is `/learn-spanish/`. If the repository name changes, update that `base` (and the manifest `start_url` / `scope`) to the new path. The Pages workflow passes `VITE_FIREBASE_*` repository variables into the build. Until you add them, the live site stays guest-only.
+The site is then <https://theaby.github.io/learn-spanish/>. The Vite `base` in `vite.config.ts` is `/learn-spanish/`. If the repository name changes, update that `base` (and the manifest `start_url` / `scope`) to the new path. The production build includes the `camino-ce661` web config. The Pages workflow still passes `VITE_FIREBASE_*` repository variables through, and a complete set replaces that config.
 
 Pages on the free plan needs a public repository. Speech recognition is best in Chrome or Edge. Safari and Firefox can still play Spanish audio, and every speaking exercise can be skipped without losing a heart. After the first visit, the service worker caches the app for offline use.
