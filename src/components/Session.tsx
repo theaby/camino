@@ -44,6 +44,8 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
   const committed = useRef(false)
   const draftRef = useRef<Draft | null>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
+  const leaveButtonRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   const exercise = exercises[index]
 
@@ -65,11 +67,27 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
 
   useEffect(() => {
     if (!leaveOpen) return
+    const dialog = dialogRef.current
+    const actions = dialog ? [...dialog.querySelectorAll<HTMLButtonElement>('button:not([disabled])')] : []
+    actions[0]?.focus()
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setLeaveOpen(false)
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setLeaveOpen(false)
+        return
+      }
+      if (event.key !== 'Tab' || actions.length === 0) return
+      event.preventDefault()
+      const current = actions.indexOf(document.activeElement as HTMLButtonElement)
+      const delta = event.shiftKey ? -1 : 1
+      const next = current === -1 ? 0 : (current + delta + actions.length) % actions.length
+      actions[next]?.focus()
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      leaveButtonRef.current?.focus()
+    }
   }, [leaveOpen])
 
   const commit = useCallback(
@@ -168,12 +186,19 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
 
   return (
     <section className="session">
+      <div className="session-surface" inert={leaveOpen}>
       <header className="session-bar">
         <div className="session-bar-inner">
           {phase === 'summary' ? (
             <span className="session-spacer" />
           ) : (
-            <button type="button" className="icon-button" onClick={() => setLeaveOpen(true)} aria-label="Leave lesson">
+            <button
+              type="button"
+              className="icon-button"
+              ref={leaveButtonRef}
+              onClick={() => setLeaveOpen(true)}
+              aria-label="Leave lesson"
+            >
               ×
             </button>
           )}
@@ -290,9 +315,10 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
           </footer>
         </>
       )}
+      </div>
 
       {leaveOpen ? (
-        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="leave-title">
+        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="leave-title" ref={dialogRef}>
           <div className="modal-card">
             <h2 id="leave-title">Leave this round?</h2>
             <p>{saved ? 'This round is already saved on this device.' : 'Answers in this round won’t be saved.'}</p>
