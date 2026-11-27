@@ -47,6 +47,15 @@ The original twelve lessons stay first, with the same ids.
 | Routine and pronouns | My routine; It and them | Grammar 7.1.4 *se* in daily reflexives. Grammar 7.1.2 direct-object pronouns *lo*, *la*, *los*, *las*. |
 | Compare and like | More and less; What I like | Grammar 2.5 grados del adjetivo (*más que*, *tan… como*, *mejor*, *peor*). Function 5.3.2: *gusta* for one thing, *gustan* for several. |
 | Used to | Back then; Once, or usually | Grammar 9.1.2 pretérito imperfecto, then the contrast with the indefinido. Lectura · Texto narrativo: one specific question about yesterday versus a habit. |
+| Commands | Tú commands; Irregular tú commands; Negative commands; Ustedes commands | Grammar 9.3 imperativo: affirmative and negative *tú*; irregulars (*ven*, *ten*, *haz*, *di*, *ve*, *pon*, *sal*); *ustedes* instructions. Lectura · Aviso; Audición · Instrucciones. |
+| To me, to you, to them | Me and te; Le and les; Nos and clarifying a él; Give, tell, send | Grammar 7.1.3 pronombres de objeto indirecto *me* / *te* / *le* / *nos* / *les*; clarifying *a él* / *a ella* / *a ellos*. Lectura · Mensaje; Audición · Mensaje. |
+| Two pronouns together | Me lo and te lo; Se lo (not le lo); Pass it along | Double clitics: *me lo*, *te lo*, *se lo* / *se la* (*le* + *lo* → *se lo*). Lectura · Diálogo. |
+| Leisure and sports | Free-time words; Sports; Weekend habits; Talk about hobbies | Notions 9.x ocio y deporte: *cine*, *música*, *fútbol*, *partido*, *equipo*, *nado*, *corro*, *bailo*, *toco*. Lectura · Texto narrativo; Audición · Monólogo. |
+| School routines | At school; A school day; School in the past | Notions 9.x escuela: *clase*, *profesor(a)*, *examen*, *tarea*, *matemáticas*, *historia*, *recreo*. Past school-day narration. |
+| Work routines | At work; A work day; Work yesterday | Notions 9.x trabajo: *oficina*, *jefe* / *jefa*, *reunión*, *horario*, *colega*, *proyecto*. Lectura · Texto narrativo. |
+| Shopping dialogues | Looking for a size; Trying it on; Returns and checkout; A full shopping scene | Notions 9.x compras in dialogue: *talla*, *probar(se)*, *cambiar*, *devolver*, *descuento*, *caja*, *recibo*. Lectura · Diálogo. |
+| Past contrasts again | More imperfect; More preterite beats; Perfecto again; Choose the past | Deeper imperfect / indefinido / perfecto contrast with *mientras*, *de repente*, *entonces*, *siempre*. Lectura · Texto narrativo. |
+| Short narratives | A diary entry; A story in a message; An oral anecdote; A mini story | Géneros 7: *diario*, *mensaje*, *anécdota*, *cuento* with one-fact DELE-style questions. |
 
 ## B1
 
@@ -79,11 +88,10 @@ These PCIC areas are real, and this path does not teach them as inventories:
 
 - Pronunciation and prosody (inventory 3). Listening uses speech synthesis. There is no sound drill.
 - Orthography beyond the accent flag and *ñ* (inventory 4): punctuation rules, the diaeresis, abbreviations.
-- The imperative paradigm (grammar 9.3). Polite requests use the conditional instead.
-- Indirect-object pronouns as a set, relative clauses before B2, and the full subjunctive (imperfect and pluperfect only appear inside C1 conditionals).
+- Relative clauses before B2, and the full subjunctive (imperfect and pluperfect only appear inside C1 conditionals). A2 now covers the imperative (grammar 9.3), indirect-object pronouns as a set, and an intro to double clitics.
 - Pretérito anterior and futuro perfecto (grammar 9.1.7 and 9.1.9), which the inventory lists and everyday speech rarely needs.
 - C2, and the C1–C2 half of the upper band.
-- School, work beyond a few job titles, and leisure beyond a few verbs (specific notions 9.x). A1 now covers house/rooms, body and basic health, clothes, shopping beyond the café, numbers to 100 and prices, phone/address/passport, months/seasons, and expanded weather and *hay* — still not every lemma on the PCIC lists.
+- Many specific-notion lists beyond the A1–A2 samples. A1 covers house/rooms, body and basic health, clothes, shopping basics, numbers to 100, phone/address, months/seasons, weather, and *hay*. A2 adds leisure/sports, school and work routines, and shopping dialogues — still not every lemma on the PCIC lists.
 - Cultural referents (inventory 10), sociocultural behavior (11), intercultural skills (12), and learning procedures (13).
 - *Voseo*. The course does not teach it and does not mark it in an exercise. The plural note is only *ustedes* and *vosotros*.
 - A full DELE paper. The labeled tasks copy the format (a short text, one right answer, three distractors, a question about a fact or a claim). They are not timed exams and they are not official DELE items.
