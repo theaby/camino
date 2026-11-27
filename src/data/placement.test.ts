@@ -38,7 +38,7 @@ describe('placement', () => {
     expect(startingLevel(answersFor(() => true))).toBe('C1')
   })
 
-  it('needs three of four to test out of a level', () => {
+  it('needs at least two thirds to test out of a level', () => {
     const items = itemsForLevel(testOutItems, 'B1')
     const right = Object.fromEntries(items.map((item) => [item.id, item.answer]))
     expect(quizCleared(items, right)).toBe(true)
@@ -46,6 +46,15 @@ describe('placement', () => {
     const one = { ...two, [items[1]!.id]: items[1]!.options.find((option) => option !== items[1]!.answer) ?? '' }
     expect(quizCleared(items, two)).toBe(true)
     expect(quizCleared(items, one)).toBe(false)
+  })
+
+  it('includes deep-A1 notions in placement and test-out banks', () => {
+    const placeA1 = itemsForLevel(placementItems, 'A1')
+    const outA1 = itemsForLevel(testOutItems, 'A1')
+    expect(placeA1.some((item) => item.answer.includes('duele') || item.answer.includes('hay'))).toBe(true)
+    expect(outA1.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['cocina', 'Llevo una camisa', 'quince', 'Mi dirección es…']),
+    )
   })
 })
 

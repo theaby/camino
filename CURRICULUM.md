@@ -30,6 +30,14 @@ The original twelve lessons stay first, with the same ids.
 | The present | I speak; Live, eat, go | Grammar 9.1.1 presente of *-ar*, *-er*, *-ir*, plus *voy* and *tengo*. Grammar 7.1.1 pronouns. *Ustedes hablan* is the plural this course practices; *vosotros habláis* is named for Spain and is not treated as an error. |
 | Days and time | The week; What time is it? | Notions 8.4 localización en el tiempo: days and clock (*es la una*, *son las*). |
 | Articles, questions, and the world | The, a, and there is; Questions, age, and weather | Grammar 1.2 género, 3 artículo, 4 demostrativos (*este* / *esta*, distinct from *está*), 5 *mi*, 7.3 *qué* / *quién* / *cuándo*. Notions 8.1.1 existencia (*hay*), 9.3.1.6 edad (*tener* + years), 9.3.1.9 and 9.7.1 profesión, 8.5.12 color (*rojo*), 8.2.6.9 temperatura (*hace frío*, *hace sol*). Near plan: *ir a* + infinitive (grammar 9.4.1). Géneros: cartel and short message, with a specific-information question. |
+| House and rooms | Rooms of the house; Doors, windows, and furniture; At home; Ask about a house | Notions 9.x hogar: rooms (*cocina*, *salón*, *dormitorio*, *baño*, *jardín*), furniture, *arriba* / *abajo*. *Hay* and *estar* for location. Lectura · Descripción / Cartel. |
+| Body and health | Body parts; It hurts; At the pharmacy; Talk about health | Notions 9.3 body and health basics. *Me duele* + body part; *tengo fiebre*; *estoy enfermo/a*; *farmacia* / *medicina*. Lectura · Cartel; Audición · Mensaje. |
+| Clothes | Clothes words; Colors on clothes; What I wear | Notions 9.x ropa. Clothes lexicon; color agreement (*camisa blanca*); *llevar* for what you wear. Lectura · Cartel. |
+| Shopping | Kinds of store; I buy; Paying; At the market | Notions 9.x compras beyond the café: *tienda*, *supermercado*, *mercado*; *compro*; *barato* / *caro*; *tarjeta* / *efectivo*. Lectura · Cartel; Audición · Diálogo. |
+| Numbers and prices | Eleven to fifteen; Sixteen to twenty; Tens to one hundred; Prices | Grammar 6 cuantificadores (11–100). Notions 8.2.1; prices with *cuesta*, *euro*, *peso*. Lectura · Cartel (menu prices). |
+| Phone and address | Phone numbers; Street and city; Personal details; Give your details | Notions 9.3.1.2–4 and 9.3.2: *teléfono*, *número*, *dirección*, *calle*, *ciudad*, *correo*, *pasaporte*. Lectura · Formulario; Audición · Presentación. |
+| Weather and calendar | More weather; January to June; July to December; The seasons | Notions 8.4 / 8.5: *hace calor*, *llueve*, *nieva*, *nublado*, *hace viento*; months; seasons (*primavera*–*invierno*). Lectura · Cartel. |
+| There is and there are | Hay and no hay; Is there…?; Describe a place | Notions 8.1.1 existencia expanded: *hay* / *no hay*, *¿hay…?*, *hay mucho(s)*, *gente*, *problema*, *lugar*. Lectura · Aviso. |
 
 ## A2
 
@@ -75,8 +83,7 @@ These PCIC areas are real, and this path does not teach them as inventories:
 - Indirect-object pronouns as a set, relative clauses before B2, and the full subjunctive (imperfect and pluperfect only appear inside C1 conditionals).
 - Pretérito anterior and futuro perfecto (grammar 9.1.7 and 9.1.9), which the inventory lists and everyday speech rarely needs.
 - C2, and the C1–C2 half of the upper band.
-- Most of the specific-notion lists: body parts, clothes, the rooms of a house, health services, school, shopping beyond a café, work beyond one job title, and leisure beyond a few verbs. A1 adds age, one color, weather in two phrases, and one profession. That is a sample, not the list.
-- Phone numbers, street addresses, and documents (notions 9.3.1.2–9.3.1.4 and 9.3.2).
+- School, work beyond a few job titles, and leisure beyond a few verbs (specific notions 9.x). A1 now covers house/rooms, body and basic health, clothes, shopping beyond the café, numbers to 100 and prices, phone/address/passport, months/seasons, and expanded weather and *hay* — still not every lemma on the PCIC lists.
 - Cultural referents (inventory 10), sociocultural behavior (11), intercultural skills (12), and learning procedures (13).
 - *Voseo*. The course does not teach it and does not mark it in an exercise. The plural note is only *ustedes* and *vosotros*.
 - A full DELE paper. The labeled tasks copy the format (a short text, one right answer, three distractors, a question about a fact or a claim). They are not timed exams and they are not official DELE items.

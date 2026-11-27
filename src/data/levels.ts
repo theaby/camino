@@ -1,3 +1,4 @@
+import { a1DeepUnits, a1DeepVocab } from './a1-deep'
 import { a1ExtraUnits, a1ExtraVocab } from './a1-extra'
 import { a2Units, a2Vocab } from './a2'
 import { b1Units, b1Vocab } from './b1'
@@ -6,14 +7,23 @@ import { c1Units, c1Vocab } from './c1'
 import { course as starterUnits, vocab as starterVocab } from './course'
 import type { Level, Vocab } from './types'
 
-export const vocab: Vocab[] = [...starterVocab, ...a1ExtraVocab, ...a2Vocab, ...b1Vocab, ...b2Vocab, ...c1Vocab]
+export const vocab: Vocab[] = [
+  ...starterVocab,
+  ...a1ExtraVocab,
+  ...a1DeepVocab,
+  ...a2Vocab,
+  ...b1Vocab,
+  ...b2Vocab,
+  ...c1Vocab,
+]
 
 export const levels: Level[] = [
   {
     id: 'A1',
     title: 'A1 · Beginner',
-    canDo: 'Greetings, articles, the present, ser and estar, and everyday needs.',
-    units: [...starterUnits, ...a1ExtraUnits],
+    canDo:
+      'Greetings, the present, ser and estar, house and health basics, clothes, shopping, numbers to 100, phone and address, and weather.',
+    units: [...starterUnits, ...a1ExtraUnits, ...a1DeepUnits],
   },
   {
     id: 'A2',
