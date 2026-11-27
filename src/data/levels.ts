@@ -4,7 +4,9 @@ import { a2DeepUnits, a2DeepVocab } from './a2-deep'
 import { a2Units, a2Vocab } from './a2'
 import { b1DeepUnits, b1DeepVocab } from './b1-deep'
 import { b1Units, b1Vocab } from './b1'
+import { b2DeepUnits, b2DeepVocab } from './b2-deep'
 import { b2Units, b2Vocab } from './b2'
+import { c1DeepUnits, c1DeepVocab } from './c1-deep'
 import { c1Units, c1Vocab } from './c1'
 import { course as starterUnits, vocab as starterVocab } from './course'
 import type { Level, Vocab } from './types'
@@ -18,7 +20,9 @@ export const vocab: Vocab[] = [
   ...b1Vocab,
   ...b1DeepVocab,
   ...b2Vocab,
+  ...b2DeepVocab,
   ...c1Vocab,
+  ...c1DeepVocab,
 ]
 
 export const levels: Level[] = [
@@ -46,13 +50,15 @@ export const levels: Level[] = [
   {
     id: 'B2',
     title: 'B2 · Upper intermediate',
-    canDo: 'The subjunctive, earlier pasts, and longer listening.',
-    units: b2Units,
+    canDo:
+      'Emotion and impersonal subjunctive, cuando-future clauses, relatives (cuyo, lo que), discourse markers, and longer barrio/news/argument texts.',
+    units: [...b2Units, ...b2DeepUnits],
   },
   {
     id: 'C1',
     title: 'C1 · Advanced',
-    canDo: 'Nuance, register, and a longer argument.',
-    units: c1Units,
+    canDo:
+      'Concession and condition beyond aunque/si, imperfect subjunctive triggers, register pairs, advanced connectors, and denser arguments.',
+    units: [...c1Units, ...c1DeepUnits],
   },
 ]

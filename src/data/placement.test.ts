@@ -78,6 +78,25 @@ describe('placement', () => {
       expect.arrayContaining(['te recomiendo', 'por eso', 'equipaje']),
     )
   })
+
+  it('includes deep-B2 emotion/cuando and deep-C1 condition/register in placement and test-out banks', () => {
+    const placeB2 = itemsForLevel(placementItems, 'B2')
+    const outB2 = itemsForLevel(testOutItems, 'B2')
+    const placeC1 = itemsForLevel(placementItems, 'C1')
+    const outC1 = itemsForLevel(testOutItems, 'C1')
+    expect(placeB2.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['Me alegra que vengas', 'Cuando llegues, llámame']),
+    )
+    expect(outB2.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['lo que', 'es decir', 'en cuanto']),
+    )
+    expect(placeC1.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['con tal de que', 'como si fuera experto']),
+    )
+    expect(outC1.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['por más que', 'por consiguiente', 'Quería que vinieras']),
+    )
+  })
 })
 
 describe('course validation', () => {

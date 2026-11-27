@@ -28,9 +28,13 @@ export const placementItems: CheckItem[] = [
   { id: 'place-b2-1', level: 'B2', prompt: 'I want you to come', options: ['Quiero que vengas', 'Quiero que vienes', 'Sé que vengas', 'Quiero venir que tú'], answer: 'Quiero que vengas' },
   { id: 'place-b2-2', level: 'B2', prompt: 'I doubt that it is true', options: ['Dudo que sea verdad', 'Dudo que es verdad', 'Sé que sea verdad', 'Creo que sea siempre verdad'], answer: 'Dudo que sea verdad' },
   { id: 'place-b2-3', level: 'B2', prompt: 'the book that I read', options: ['el libro que leí', 'el libro quien leí', 'el libro cuyo leí', 'el libro lo que leí'], answer: 'el libro que leí' },
+  { id: 'place-b2-4', level: 'B2', prompt: 'It makes me glad that you come', options: ['Me alegra que vengas', 'Me alegra que vienes', 'Sé que vengas', 'Dudo que vienes'], answer: 'Me alegra que vengas' },
+  { id: 'place-b2-5', level: 'B2', prompt: 'When you arrive, call me', options: ['Cuando llegues, llámame', 'Cuando llegas mañana una vez, llámame', 'Cuando llegaste, llámame', 'Cuando llegar, llama'], answer: 'Cuando llegues, llámame' },
   { id: 'place-c1-1', level: 'C1', prompt: 'Even if it rains, I will go out', options: ['Aunque llueva, saldré', 'Aunque llueve, salí', 'A menos que llueve, salgo', 'Si llover, saldría'], answer: 'Aunque llueva, saldré' },
   { id: 'place-c1-2', level: 'C1', prompt: 'If I had known, I would have called', options: ['Si lo hubiera sabido, habría llamado', 'Si lo sabré, llamé', 'Si lo sé, habría llamado', 'Si lo hubiera, llamo ayer'], answer: 'Si lo hubiera sabido, habría llamado' },
   { id: 'place-c1-3', level: 'C1', prompt: 'however', promptLang: 'en', options: ['sin embargo', 'por lo tanto', 'a menos que', 'cuyo'], answer: 'sin embargo' },
+  { id: 'place-c1-4', level: 'C1', prompt: 'provided that', promptLang: 'en', options: ['con tal de que', 'por más que', 'es decir', 'cuyo'], answer: 'con tal de que' },
+  { id: 'place-c1-5', level: 'C1', prompt: 'as if he were an expert', options: ['como si fuera experto', 'como si es experto', 'como si será experto', 'como si fue experto ayer solo'], answer: 'como si fuera experto' },
 ]
 
 export const testOutItems: CheckItem[] = [
@@ -60,10 +64,16 @@ export const testOutItems: CheckItem[] = [
   { id: 'out-b2-2', level: 'B2', prompt: 'I had already left', options: ['Ya había salido', 'Ya he salido ahora mismo', 'Ya saldré', 'Ya salía cada día'], answer: 'Ya había salido' },
   { id: 'out-b2-3', level: 'B2', prompt: 'whose', options: ['cuyo', 'que', 'quien', 'sin embargo'], answer: 'cuyo' },
   { id: 'out-b2-4', level: 'B2', prompt: 'I know that it is true', options: ['Sé que es verdad', 'Sé que sea verdad', 'Dudo que es verdad', 'No creo que es verdad'], answer: 'Sé que es verdad' },
+  { id: 'out-b2-5', level: 'B2', prompt: 'what / that which', options: ['lo que', 'cuyo', 'quien', 'hasta que'], answer: 'lo que' },
+  { id: 'out-b2-6', level: 'B2', prompt: 'in other words', options: ['es decir', 'hasta que', 'cuyo', 'ojalá'], answer: 'es decir' },
+  { id: 'out-b2-7', level: 'B2', prompt: 'as soon as', options: ['en cuanto', 'cuyo', 'sin embargo', 'aunque'], answer: 'en cuanto' },
   { id: 'out-c1-1', level: 'C1', prompt: 'unless', options: ['a menos que', 'sin embargo', 'por lo tanto', 'cuyo'], answer: 'a menos que' },
   { id: 'out-c1-2', level: 'C1', prompt: 'If I had time, I would travel', options: ['Si tuviera tiempo, viajaría', 'Si tengo tiempo, viajaría', 'Si habría tiempo, viajo', 'Si tuve, viajé'], answer: 'Si tuviera tiempo, viajaría' },
   { id: 'out-c1-3', level: 'C1', prompt: 'therefore', options: ['por lo tanto', 'sin embargo', 'aunque', 'a menos que'], answer: 'por lo tanto' },
   { id: 'out-c1-4', level: 'C1', prompt: 'A text to a friend: send me the file', options: ['¿Me mandas el archivo?', 'Le agradecería que me remitiera el archivo', '¿Podría usted enviármelo?', 'Les ruego me lo hagan llegar'], answer: '¿Me mandas el archivo?' },
+  { id: 'out-c1-5', level: 'C1', prompt: 'no matter how much', options: ['por más que', 'por lo tanto', 'es decir', 'cuyo'], answer: 'por más que' },
+  { id: 'out-c1-6', level: 'C1', prompt: 'consequently', options: ['por consiguiente', 'por más que', 'cuyo', 'ojalá'], answer: 'por consiguiente' },
+  { id: 'out-c1-7', level: 'C1', prompt: 'I wanted you to come', options: ['Quería que vinieras', 'Quería que vienes', 'Quiero que vinieras ayer solo', 'Sé que vinieras'], answer: 'Quería que vinieras' },
 ]
 
 export function correctCount(items: readonly CheckItem[], answers: Record<string, string>): number {

@@ -82,6 +82,12 @@ The original twelve lessons stay first, with the same ids.
 | The present subjunctive | I want you to; I doubt that | Grammar 9.2.1 presente de subjuntivo after wishes and doubt (functions 5.3 deseos and 5.2.14 falta de certeza). *Sé que* stays indicative. |
 | Distance in the past | Earlier that day; The person who | Grammar 9.1.8 pluscuamperfecto and 9.1.10 condicional compuesto. Grammar 7.2 relativos: *que*, *quien*, *cuyo*. |
 | Longer listening and reading | A changing neighborhood; Before Friday | Macrofunción narrativa and a spoken request (géneros 7). The same B2 grammar, with a detail question and a condition. |
+| Emotion and the subjunctive | It makes me glad; It bothers me; Sorry and surprised; Fear and if only | Grammar 9.2.1 after emotion: *me alegra*, *me molesta*, *siento*, *me sorprende*, *temo*, *me da miedo*, *ojalá*, *es una lástima*. |
+| Impersonal judgments | It is necessary; Possible and unlikely; Judge and recommend; A necessary change | Impersonal *es necesario* / *hace falta* / *es posible* / *es improbable* / *es mejor* / *es bueno* / *no es cierto* / *puede ser que* + subjunctive. Lectura · Argumento. |
+| When and until (future) | When you arrive; As soon as; Until and before; A timed plan | Time clauses with future reference: *cuando*, *en cuanto*, *tan pronto como*, *hasta que*, *antes de que*, *después de que* + subjunctive. Lectura · Plan; Audición · Mensaje. |
+| Relatives in depth | Whose: agreement; What / that which; The one who / those who; Relatives in a barrio text | Grammar 7.2: *cuyo/cuya/cuyos/cuyas*; free relatives *lo que*, *todo lo que*, *el que*, *la que*, *quienes*, *donde*, *quienquiera que*. |
+| Discourse markers | In other words; Sides and summary; Chain the markers; Markers in the news | Function 5.6: *es decir*, *o sea*, *de hecho*, *asimismo*, *por un lado* / *por otro lado*, *en resumen*, *en conclusión*, *en primer lugar*. Lectura · Noticia. |
+| Longer barrio and news | Barrio in depth; A news story; A short argument; Held-out B2 practice | Longer barrio/news/argument input (géneros 7) with one-fact DELE-style questions; held-out mix of emotion, time, relatives, and markers. |
 
 ## C1
 
@@ -90,6 +96,12 @@ The original twelve lessons stay first, with the same ids.
 | Nuance | Even if it rains; If I had known | Concession with *aunque* plus subjunctive or indicative. Grammar 9.2.2 and 9.2.4 in *si hubiera* and *habría*. Purpose and condition: *para que*, *a menos que*. |
 | Register and connectors | Could you; However | Function 5.5.3 dirigirse a alguien: *usted* versus *tú*. Function 5.6 estructurar el discurso: *sin embargo*, *no obstante*, *por lo tanto*, *en cambio*. |
 | A longer argument | Remote work; A condition on the project | Géneros 7.3.6 macrofunción argumentativa: thesis and concession, then a monologue whose question asks for the condition. |
+| More concession | No matter how much; Despite and while; Concession in the past; Concession in an argument | *Por más que*, *por mucho que*, *a pesar de que*, *si bien*, *por bien que*, *aunque hubiera*. Lectura · Argumento. |
+| More conditions | Provided that; As long as and in case; As if; Conditions on a project | *Con tal de que*, *a condición de que*, *siempre que*, *siempre y cuando*, *en caso de que*, *salvo que*, *a no ser que*, *como si* + imperfect subjunctive. |
+| Past triggers for the subjunctive | I wanted you to; It was necessary; Past wish, doubt, request; Past conditions in speech | Grammar 9.2.2 after past triggers: *quería que*, *era necesario que*, *me pedía que*, *dudaba que*. Audición · Relato. |
+| Register pairs | Ask formally and informally; Closings and follow-ups; Excuse me vs sorry; Pick the register | Function 5.5.3 pairs: *Le agradecería* / *Te pido*, *Ruego* / *Oye*, *Quedo a la espera* / *Me avisas*, *Cordialmente* / *Un abrazo*, *Disculpe* / *Perdón*. |
+| Advanced connectors | Consequently; Even so; Build the move; Connectors in a long argument | Function 5.6: *por consiguiente*, *en efecto*, *vale decir*, *ahora bien*, *con todo*, *dicho esto*, *en última instancia*, *cabe señalar*. |
+| Longer arguments | Remote work, revisited; A conditional project pitch; Argue in two registers; Held-out C1 practice | Denser argument macros with concession, condition, register, and advanced connectors; held-out C1 mix. |
 
 ## What this course does not cover
 
@@ -97,10 +109,10 @@ These PCIC areas are real, and this path does not teach them as inventories:
 
 - Pronunciation and prosody (inventory 3). Listening uses speech synthesis. There is no sound drill.
 - Orthography beyond the accent flag and *ñ* (inventory 4): punctuation rules, the diaeresis, abbreviations.
-- Relative clauses before B2, and the full subjunctive (imperfect and pluperfect only appear inside C1 conditionals). A2 now covers the imperative (grammar 9.3), indirect-object pronouns as a set, and an intro to double clitics.
+- Relative clauses before B2. B2 now deepens *cuyo* agreement and free relatives (*lo que*, *el que*, *quienes*). The imperfect and pluperfect subjunctive appear in C1 conditionals and in past-trigger environments (*quería que*, *como si*). A2 covers the imperative (grammar 9.3), indirect-object pronouns as a set, and an intro to double clitics.
 - Pretérito anterior and futuro perfecto (grammar 9.1.7 and 9.1.9), which the inventory lists and everyday speech rarely needs.
 - C2, and the C1–C2 half of the upper band.
-- Many specific-notion lists beyond the A1–A2 samples. A1 covers house/rooms, body and basic health, clothes, shopping basics, numbers to 100, phone/address, months/seasons, weather, and *hay*. A2 adds leisure/sports, school and work routines, and shopping dialogues — still not every lemma on the PCIC lists.
+- Many specific-notion lists beyond the A1–A2 samples. A1 covers house/rooms, body and basic health, clothes, shopping basics, numbers to 100, phone/address, months/seasons, weather, and *hay*. A2 adds leisure/sports, school and work routines, and shopping dialogues — still not every lemma on the PCIC lists. B2–C1 deepen grammar, discourse, and longer input more than specific-notion lists.
 - Cultural referents (inventory 10), sociocultural behavior (11), intercultural skills (12), and learning procedures (13).
 - *Voseo*. The course does not teach it and does not mark it in an exercise. The plural note is only *ustedes* and *vosotros*.
 - A full DELE paper. The labeled tasks copy the format (a short text, one right answer, three distractors, a question about a fact or a claim). They are not timed exams and they are not official DELE items.
