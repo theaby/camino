@@ -65,6 +65,15 @@ The original twelve lessons stay first, with the same ids.
 | Looking ahead | I will; I would | Grammar 9.1.4 futuro imperfecto and *ir a* + infinitive. Grammar 9.1.5 condicional for a polite request and *me gustaría*. |
 | Have done, por and para | I have done it; Por and para | Grammar 9.1.6 again, now beside a finished or habitual past. *Por* and *para* for movement through, duration, cause, and purpose (grammar 12.2.4 complementos circunstanciales, 15.3.4 causales, 15.3.5 finales). |
 | Opinions and plans | I think that; Tomorrow’s plan | Function 5.2.2 dar una opinión and 5.2.9 acuerdo. *Creo que* stays in the indicative. Audición · Monólogo and Lectura · Plan: one fact from a short plan. |
+| Travel narratives | A travel day; Stay and sightseeing; Another trip story; Tell the trip | Function 5.1.7 narrar with travel notions: *vuelo*, *retraso*, *equipaje*, *reserva*, *excursión*, *paisaje*. Lectura · Narración; Audición · Monólogo. |
+| Work and study plans | Study goals; The work week ahead; Interview and enrollment; A semester plan | Notions 9.x estudio/trabajo: *meta*, *plazo*, *beca*, *matrícula*, *entrevista*, *informe*, *presentación*. Future and *ir a*. Lectura · Plan; Audición · Plan. |
+| Advice and suggestions | You should; I recommend; Why don’t you…?; Give advice | Functions 5.x aconsejar / sugerir: *deberías*, *te recomiendo*, *te aconsejo*, *sugiero*, *¿por qué no…?*, *es mejor*, *conviene*. Audición · Monólogo; Lectura · Consejo. |
+| More por and para | Por: cause and means; Para: purpose and deadlines; Por or para?; Por/para in a plan | Expanded *por* (*por eso*, *por culpa de*, *por teléfono*, *a cambio de*) and *para* (*para mejorar*, *para el viernes*, *para siempre*). Lectura · Plan. |
+| Reported speech lite | Someone says that; Someone said that; Promise and explain; Relay a message | *Dice que* / *dijo que* / *me dijo* / *según* / *preguntó si* / *respondió que* / *prometió* / *explicó que* with indicative. Lectura · Mensaje; Audición · Mensaje. |
+| Health and services | A medical appointment; Symptoms; Prescription and insurance; At the clinic | Notions 9.3 services: *cita médica*, *síntoma*, *receta*, *seguro médico*, *urgencia*, *tratamiento*. Lectura · Narración; Audición · Monólogo. |
+| Media and hobbies | Series and films; Podcasts and news; Talk about hobbies; A media review | Notions 9.x ocio/medios: *serie*, *película*, *podcast*, *noticia*, *novela*, *afición*, *crítica*. Lectura · Crítica; Audición · Monólogo. |
+| Maybe and if | Maybe; If it rains…; Connect the story; Plans with if and maybe | *Quizá* / *tal vez* (indicative); *si* + present for real plans; connectors *además*, *luego*, *en cambio*, *por un lado*, *en resumen*. Lectura · Plan; Audición · Plan. |
+| DELE-style plans | Read a plan; Listen to a monologue; Plan plus opinion; Held-out practice | Untimed DELE B1-format Lectura · Plan and Audición · Monólogo sets with one-fact questions across travel, advice, and semester plans. |
 
 ## B2
 
