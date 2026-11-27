@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { allLessons, isLessonUnlocked, levels, nextIncomplete } from '../data/catalog'
+import { isLessonUnlocked, levels, nextIncomplete, requiredLessons } from '../data/catalog'
 import { DAILY_GOAL, dailyXpOn, dueVocabIds, type Progress } from '../lib/progress'
 import { navigate } from '../lib/route'
 import { CheckIcon, LockIcon } from './Icons'
@@ -11,9 +11,9 @@ type Props = {
 }
 
 export function PathScreen({ progress, today, onDismissWelcome }: Props) {
-  const lessons = allLessons()
+  const required = requiredLessons()
   const next = nextIncomplete(progress.completedLessons)
-  const done = progress.completedLessons.length
+  const done = required.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
   const earnedToday = dailyXpOn(progress, today)
   const goalPct = Math.min(100, Math.round((earnedToday / DAILY_GOAL) * 100))
   const due = dueVocabIds(progress, today).length
@@ -28,8 +28,8 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
             <h1 lang="es">{hello.es}</h1>
             <p className="hero-copy">
               {next
-                ? `${done} of ${lessons.length} lessons. A short one is enough for today.`
-                : 'You finished this path. Review keeps the words close.'}
+                ? `${done} of ${required.length} required lessons. Optional units do not block the path.`
+                : 'You finished the required path. Optional units and review stay open.'}
             </p>
             {progress.streak > 0 ? <p className="hero-streak">{progress.streak} day streak</p> : <p className="hero-streak">Practice today to start a streak.</p>}
             {next ? (
@@ -74,8 +74,10 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
           ) : null}
 
           {levels.map((level) => {
-            const levelLessons = level.units.flatMap((unit) => unit.lessons)
-            const levelCleared = levelLessons.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
+            const levelRequired = level.units.filter((unit) => !unit.optional).flatMap((unit) => unit.lessons)
+            const levelCleared = levelRequired.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
+            const levelDone = levelRequired.length > 0 && levelCleared === levelRequired.length
+            let requiredUnitIndex = 0
             return (
               <section key={level.id} className="level-block" data-level={level.id}>
                 <header className="level-head">
@@ -83,61 +85,74 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
                     <h2>{level.title}</h2>
                     <p>{level.canDo}</p>
                     <p className="unit-count">
-                      {levelCleared}/{levelLessons.length} lessons
+                      {levelCleared}/{levelRequired.length} required lessons
                     </p>
                   </div>
-                  {levelCleared === levelLessons.length ? null : (
+                  {levelDone ? null : (
                     <button type="button" className="btn-quiet" onClick={() => navigate(`/test-out/${level.id}`)}>
                       Test out
                     </button>
                   )}
                 </header>
-                {level.units.map((unit, unitIndex) => {
-            const cleared = unit.lessons.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
-            return (
-              <section key={unit.id} className="unit" style={{ '--accent': unit.accent } as CSSProperties}>
-                <header className="unit-head">
-                  <span className="unit-index">{unitIndex + 1}</span>
-                  <div>
-                    <h2>{unit.title}</h2>
-                    <p>{unit.description}</p>
-                    <p className="unit-count">
-                      {cleared}/{unit.lessons.length} lessons
-                    </p>
-                  </div>
-                </header>
-                <div className="lesson-list">
-                  {unit.lessons.map((lesson) => {
-                    const unlocked = isLessonUnlocked(lesson.id, progress.completedLessons)
-                    const complete = progress.completedLessons.includes(lesson.id)
-                    const current = next?.id === lesson.id
-                    const state = !unlocked ? 'locked' : complete ? 'done' : current ? 'current' : 'open'
-                    const action = complete ? 'Practice' : 'Start'
-                    return (
-                      <button
-                        key={lesson.id}
-                        type="button"
-                        className="lesson"
-                        disabled={!unlocked}
-                        aria-label={unlocked ? `${lesson.title}. ${action}` : `${lesson.title}, locked`}
-                        onClick={() => navigate(`/lesson/${lesson.id}`)}
-                      >
-                        <span className="node" data-state={state}>
-                          {state === 'locked' ? <LockIcon /> : state === 'done' ? <CheckIcon /> : unit.lessons.indexOf(lesson) + 1}
-                        </span>
-                        <span className="lesson-copy">
-                          <span className="lesson-title">{lesson.title}</span>
-                          <span className="lesson-meta">
-                            {lesson.exercises.length} exercises · {lesson.summary}
-                          </span>
-                        </span>
-                        <span className="lesson-action">{unlocked ? action : ''}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              </section>
-            )
+                {level.units.map((unit) => {
+                  const cleared = unit.lessons.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
+                  const indexLabel = unit.optional ? 'Opt' : String(++requiredUnitIndex)
+                  return (
+                    <section
+                      key={unit.id}
+                      className={unit.optional ? 'unit unit-optional' : 'unit'}
+                      style={{ '--accent': unit.accent } as CSSProperties}
+                    >
+                      <header className="unit-head">
+                        <span className="unit-index">{indexLabel}</span>
+                        <div>
+                          <h2>
+                            {unit.title}
+                            {unit.optional ? <span className="optional-tag">Optional</span> : null}
+                          </h2>
+                          <p>{unit.description}</p>
+                          <p className="unit-count">
+                            {cleared}/{unit.lessons.length} lessons
+                            {unit.optional ? ' · not required' : ''}
+                          </p>
+                        </div>
+                      </header>
+                      <div className="lesson-list">
+                        {unit.lessons.map((lesson) => {
+                          const unlocked = isLessonUnlocked(lesson.id, progress.completedLessons)
+                          const complete = progress.completedLessons.includes(lesson.id)
+                          const current = next?.id === lesson.id
+                          const state = !unlocked ? 'locked' : complete ? 'done' : current ? 'current' : 'open'
+                          const action = complete ? 'Practice' : 'Start'
+                          const timed =
+                            typeof lesson.timedSeconds === 'number' && lesson.timedSeconds > 0
+                              ? ` · ${Math.round(lesson.timedSeconds / 60)} min`
+                              : ''
+                          return (
+                            <button
+                              key={lesson.id}
+                              type="button"
+                              className="lesson"
+                              disabled={!unlocked}
+                              aria-label={unlocked ? `${lesson.title}. ${action}` : `${lesson.title}, locked`}
+                              onClick={() => navigate(`/lesson/${lesson.id}`)}
+                            >
+                              <span className="node" data-state={state}>
+                                {state === 'locked' ? <LockIcon /> : state === 'done' ? <CheckIcon /> : unit.lessons.indexOf(lesson) + 1}
+                              </span>
+                              <span className="lesson-copy">
+                                <span className="lesson-title">{lesson.title}</span>
+                                <span className="lesson-meta">
+                                  {lesson.exercises.length} exercises{timed} · {lesson.summary}
+                                </span>
+                              </span>
+                              <span className="lesson-action">{unlocked ? action : ''}</span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </section>
+                  )
                 })}
               </section>
             )
@@ -150,6 +165,7 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
             <li>Listen, then read the phrase.</li>
             <li>Say it when your browser can hear you.</li>
             <li>Misses return in Review, spaced out.</li>
+            <li>Optional units never block Continue.</li>
           </ul>
           <p className="aside-phrase" lang="es">
             Por favor

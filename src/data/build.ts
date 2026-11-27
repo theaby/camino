@@ -100,6 +100,12 @@ export function conjugate(
   return { id, type: 'conjugate', prompt, answer, vocabIds, ...(accept ? { accept } : {}), ...(tip ? { tip } : {}) }
 }
 
-export function lesson(id: string, title: string, summary: string, exercises: Lesson['exercises']): Lesson {
-  return { id, title, summary, exercises }
+export function lesson(
+  id: string,
+  title: string,
+  summary: string,
+  exercises: Lesson['exercises'],
+  timedSeconds?: number,
+): Lesson {
+  return { id, title, summary, exercises, ...(timedSeconds ? { timedSeconds } : {}) }
 }

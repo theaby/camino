@@ -18,6 +18,8 @@ type Props = {
   title: string
   exercises: Exercise[]
   heartsEnabled: boolean
+  /** Countdown for timed mock papers. When it hits zero, the round ends. */
+  timedSeconds?: number
   sound: boolean
   preview: (summary: SessionSummary) => Reward
   onResult: (summary: SessionSummary) => void
@@ -27,7 +29,17 @@ type Props = {
 
 type Phase = 'answer' | 'feedback' | 'summary'
 
-export function Session({ title, exercises, heartsEnabled, sound, preview, onResult, onExit, onRetry }: Props) {
+export function Session({
+  title,
+  exercises,
+  heartsEnabled,
+  timedSeconds,
+  sound,
+  preview,
+  onResult,
+  onExit,
+  onRetry,
+}: Props) {
   const [index, setIndex] = useState(0)
   const [phase, setPhase] = useState<Phase>('answer')
   const [hearts, setHearts] = useState(HEARTS_PER_LESSON)
@@ -40,12 +52,19 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
   const [outcome, setOutcome] = useState<SessionSummary['outcome']>('complete')
   const [leaveOpen, setLeaveOpen] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [secondsLeft, setSecondsLeft] = useState(timedSeconds ?? 0)
+  const [timedOut, setTimedOut] = useState(false)
   const lock = useRef(false)
   const committed = useRef(false)
   const draftRef = useRef<Draft | null>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
+  const correctRef = useRef(0)
+  const gradedRef = useRef(0)
+  const gradesRef = useRef<SessionSummary['grades']>([])
+  const phaseRef = useRef<Phase>(phase)
 
   const exercise = exercises[index]
+  const timed = typeof timedSeconds === 'number' && timedSeconds > 0
 
   const onDraft = useCallback((next: Draft | null) => {
     draftRef.current = next
@@ -62,6 +81,13 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
   }, [index])
 
   useEffect(() => () => stopSpeaking(), [])
+
+  useEffect(() => {
+    correctRef.current = correct
+    gradedRef.current = graded
+    gradesRef.current = grades
+    phaseRef.current = phase
+  }, [correct, graded, grades, phase])
 
   useEffect(() => {
     if (!leaveOpen) return
@@ -83,6 +109,24 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
     },
     [onResult, preview],
   )
+
+  useEffect(() => {
+    if (!timed || phase === 'summary' || committed.current) return
+    if (secondsLeft <= 0) {
+      setTimedOut(true)
+      commit({
+        outcome: 'complete',
+        correct: correctRef.current,
+        graded: gradedRef.current,
+        grades: gradesRef.current,
+      })
+      if (sound) playCue('done')
+      setPhase('summary')
+      return
+    }
+    const id = window.setTimeout(() => setSecondsLeft((value) => value - 1), 1000)
+    return () => window.clearTimeout(id)
+  }, [commit, phase, secondsLeft, sound, timed])
 
   const submit = useCallback(
     (nextDraft: Draft) => {
@@ -187,7 +231,11 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
           >
             <span style={{ width: `${progress}%` }} />
           </div>
-          {heartsEnabled ? (
+          {timed ? (
+            <span className="timer-pill" data-urgent={secondsLeft <= 30 && phase !== 'summary' ? 'true' : 'false'} aria-label={`${secondsLeft} seconds left`}>
+              {formatClock(secondsLeft)}
+            </span>
+          ) : heartsEnabled ? (
             <div className="hearts" aria-label={`${hearts} hearts left`}>
               {Array.from({ length: HEARTS_PER_LESSON }, (_, heart) => (
                 <HeartIcon key={heart} filled={heart < hearts} />
@@ -203,12 +251,15 @@ export function Session({ title, exercises, heartsEnabled, sound, preview, onRes
         <div className="session-body">
           <div className="session-body-inner summary">
             <p className="kicker">{outcome === 'complete' ? title : 'Round over'}</p>
-            <h1>{outcome === 'complete' ? 'Lesson complete' : 'Out of hearts'}</h1>
+            <h1>
+              {outcome === 'complete' ? (timedOut ? 'Time is up' : 'Lesson complete') : 'Out of hearts'}
+            </h1>
             <p className="summary-xp">+{reward.xpGained} XP</p>
             <p>
               {graded === 0 ? 'No answers graded.' : `${correct} of ${graded} correct.`}{' '}
               {reward.streak > 0 ? `${reward.streak} day streak.` : ''}
             </p>
+            {timedOut ? <p>The clock ran out. Graded answers still count, and you can practice the paper again.</p> : null}
             {outcome === 'hearts' ? <p>Missed words are saved for Review. This lesson stays open.</p> : null}
             {missed.length > 0 ? (
               <ul className="missed">
@@ -366,4 +417,11 @@ function canCheck(draft: Draft | null): boolean {
 function feedbackKind(result: Settlement | null): 'correct' | 'wrong' | 'idle' {
   if (!result || result.skipped) return 'idle'
   return result.correct ? 'correct' : 'wrong'
+}
+
+function formatClock(totalSeconds: number): string {
+  const safe = Math.max(0, totalSeconds)
+  const minutes = Math.floor(safe / 60)
+  const seconds = safe % 60
+  return `${minutes}:${String(seconds).padStart(2, '0')}`
 }

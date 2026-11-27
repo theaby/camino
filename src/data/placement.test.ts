@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { lessonIdsBefore, lessonsInLevel } from './catalog'
+import { isLessonUnlocked, lessonIdsBefore, requiredLessons, requiredLessonsInLevel } from './catalog'
 import { grantLessons } from '../lib/progress'
 import { emptyProgress } from '../lib/progress'
 import { placementItems, quizCleared, startingLevel, testOutItems, itemsForLevel } from './placement'
@@ -23,9 +23,21 @@ describe('placement', () => {
     expect(startingLevel(answersFor((level) => level === 'A1'))).toBe('A2')
     const progress = grantLessons(emptyProgress(), lessonIdsBefore('A2'))
     expect(progress.xp).toBe(0)
-    expect(progress.completedLessons).toEqual(lessonsInLevel('A1').map((lesson) => lesson.id))
+    expect(progress.completedLessons).toEqual(requiredLessonsInLevel('A1').map((lesson) => lesson.id))
     expect(progress.completedLessons).toContain('greetings-hello')
     expect(progress.completedLessons).not.toContain('a2-pret-ar')
+    expect(progress.completedLessons).not.toContain('a1-min-pairs-r')
+  })
+
+  it('keeps optional polish units off the required unlock chain', () => {
+    const required = requiredLessons()
+    const lastA1Required = requiredLessonsInLevel('A1').at(-1)!
+    const firstA2 = requiredLessonsInLevel('A2')[0]!
+    expect(isLessonUnlocked(firstA2.id, [lastA1Required.id])).toBe(true)
+    expect(isLessonUnlocked('a1-min-pairs-r', [lastA1Required.id])).toBe(true)
+    expect(isLessonUnlocked('a1-min-pairs-n', [lastA1Required.id])).toBe(false)
+    expect(required.some((lesson) => lesson.id === 'a1-min-pairs-r')).toBe(false)
+    expect(required.some((lesson) => lesson.id.startsWith('b1-mock-'))).toBe(false)
   })
 
   it('does not skip a missed foundation just because a later level was right', () => {

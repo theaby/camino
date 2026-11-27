@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { lessonIdsBefore, lessonsInLevel } from '../data/catalog'
+import { lessonIdsBefore, requiredLessonsInLevel } from '../data/catalog'
 import { emptyProgress, grantLessons, type Progress } from './progress'
 import { firebaseConfigFrom, guestContribution, mergeAccount } from './account'
 import { resolveFirebaseConfig } from './firebase-config'
@@ -155,14 +155,15 @@ describe('account merge', () => {
     expect(account.xp).toBe(20)
     expect(account.completedLessons).toEqual([...new Set(placed.completedLessons)].sort())
 
-    const tested = grantLessons(placed, lessonsInLevel('B1').map((lesson) => lesson.id))
+    const tested = grantLessons(placed, requiredLessonsInLevel('B1').map((lesson) => lesson.id))
     const delta = guestContribution(placed, tested)
     expect(delta.isDelta).toBe(true)
     expect(delta.progress.xp).toBe(0)
-    expect(delta.progress.completedLessons).toEqual(lessonsInLevel('B1').map((lesson) => lesson.id).sort())
+    expect(delta.progress.completedLessons).toEqual(requiredLessonsInLevel('B1').map((lesson) => lesson.id).sort())
     const synced = mergeAccount(account, delta.progress, delta.isDelta)
     expect(synced.xp).toBe(20)
     expect(synced.completedLessons).toContain('b1-story')
     expect(synced.completedLessons).toContain('a1-ask')
+    expect(synced.completedLessons).not.toContain('b1-mock-reading')
   })
 })
