@@ -56,6 +56,13 @@ describe('placement', () => {
       expect.arrayContaining(['cocina', 'Llevo una camisa', 'quince', 'Mi dirección es…']),
     )
   })
+
+  it('includes deep-A2 commands and pronouns in placement and test-out banks', () => {
+    const placeA2 = itemsForLevel(placementItems, 'A2')
+    const outA2 = itemsForLevel(testOutItems, 'A2')
+    expect(placeA2.map((item) => item.answer)).toEqual(expect.arrayContaining(['¡No vayas!', 'Se lo doy']))
+    expect(outA2.map((item) => item.answer)).toEqual(expect.arrayContaining(['Ven', 'Me das', 'fútbol']))
+  })
 })
 
 describe('course validation', () => {

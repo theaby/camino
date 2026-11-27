@@ -1,5 +1,6 @@
 import { a1DeepUnits, a1DeepVocab } from './a1-deep'
 import { a1ExtraUnits, a1ExtraVocab } from './a1-extra'
+import { a2DeepUnits, a2DeepVocab } from './a2-deep'
 import { a2Units, a2Vocab } from './a2'
 import { b1Units, b1Vocab } from './b1'
 import { b2Units, b2Vocab } from './b2'
@@ -12,6 +13,7 @@ export const vocab: Vocab[] = [
   ...a1ExtraVocab,
   ...a1DeepVocab,
   ...a2Vocab,
+  ...a2DeepVocab,
   ...b1Vocab,
   ...b2Vocab,
   ...c1Vocab,
@@ -28,8 +30,9 @@ export const levels: Level[] = [
   {
     id: 'A2',
     title: 'A2 · Elementary',
-    canDo: 'A finished past, the present perfect, routines, and how things used to be.',
-    units: a2Units,
+    canDo:
+      'Past tenses, routines, comparisons, commands, indirect-object pronouns, leisure and sports, school and work days, and shopping dialogues.',
+    units: [...a2Units, ...a2DeepUnits],
   },
   {
     id: 'B1',
