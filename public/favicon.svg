@@ -1,5 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Camino">
-  <rect width="64" height="64" rx="16" fill="#1F7A4D"/>
-  <circle cx="32" cy="28" r="10" fill="#F0B429"/>
-  <rect x="18" y="42" width="28" height="6" rx="3" fill="#F6F1E8"/>
+  <circle cx="32" cy="32" r="30" fill="#F6F1E8" stroke="#145C38" stroke-width="4"/>
+  <circle cx="32" cy="32" r="26" fill="#FFF8EC"/>
+  <path fill="#E8A317" d="M18 40c2-10 8-18 16-22 2 6 4 12 3 20-6 2-13 3-19 2Z"/>
+  <path fill="#F0B429" d="M34 16c6 2 12 8 14 16-4 4-10 6-16 6 0-8 0-16 2-22Z"/>
+  <path fill="#D4920F" d="M42 30c4 1 8 4 10 8-3 2-7 3-11 2 0-3 0-7 1-10Z"/>
+  <circle cx="38" cy="28" r="3.2" fill="#1C2430"/>
+  <circle cx="39" cy="27.2" r="1" fill="#F6F1E8"/>
 </svg>
