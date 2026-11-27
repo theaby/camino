@@ -2,6 +2,7 @@ import { a1DeepUnits, a1DeepVocab } from './a1-deep'
 import { a1ExtraUnits, a1ExtraVocab } from './a1-extra'
 import { a2DeepUnits, a2DeepVocab } from './a2-deep'
 import { a2Units, a2Vocab } from './a2'
+import { b1DeepUnits, b1DeepVocab } from './b1-deep'
 import { b1Units, b1Vocab } from './b1'
 import { b2Units, b2Vocab } from './b2'
 import { c1Units, c1Vocab } from './c1'
@@ -15,6 +16,7 @@ export const vocab: Vocab[] = [
   ...a2Vocab,
   ...a2DeepVocab,
   ...b1Vocab,
+  ...b1DeepVocab,
   ...b2Vocab,
   ...c1Vocab,
 ]
@@ -37,8 +39,9 @@ export const levels: Level[] = [
   {
     id: 'B1',
     title: 'B1 · Intermediate',
-    canDo: 'Stories, the future, the conditional, and por versus para.',
-    units: b1Units,
+    canDo:
+      'Travel narratives, work and study plans, advice, expanded por/para, reported speech lite, health and services, media and hobbies, and DELE-style plans.',
+    units: [...b1Units, ...b1DeepUnits],
   },
   {
     id: 'B2',

@@ -42,10 +42,14 @@ describe('placement', () => {
     const items = itemsForLevel(testOutItems, 'B1')
     const right = Object.fromEntries(items.map((item) => [item.id, item.answer]))
     expect(quizCleared(items, right)).toBe(true)
-    const two = { ...right, [items[0]!.id]: items[0]!.options.find((option) => option !== items[0]!.answer) ?? '' }
-    const one = { ...two, [items[1]!.id]: items[1]!.options.find((option) => option !== items[1]!.answer) ?? '' }
-    expect(quizCleared(items, two)).toBe(true)
-    expect(quizCleared(items, one)).toBe(false)
+    const wrong = (item: (typeof items)[number]) => item.options.find((option) => option !== item.answer) ?? ''
+    // One miss still clears; miss enough that correct*3 < length*2 fails the gate.
+    const missOne = { ...right, [items[0]!.id]: wrong(items[0]!) }
+    expect(quizCleared(items, missOne)).toBe(true)
+    const fail: Record<string, string> = { ...right }
+    const needWrong = Math.floor(items.length / 3) + 1
+    for (let i = 0; i < needWrong; i++) fail[items[i]!.id] = wrong(items[i]!)
+    expect(quizCleared(items, fail)).toBe(false)
   })
 
   it('includes deep-A1 notions in placement and test-out banks', () => {
@@ -62,6 +66,17 @@ describe('placement', () => {
     const outA2 = itemsForLevel(testOutItems, 'A2')
     expect(placeA2.map((item) => item.answer)).toEqual(expect.arrayContaining(['¡No vayas!', 'Se lo doy']))
     expect(outA2.map((item) => item.answer)).toEqual(expect.arrayContaining(['Ven', 'Me das', 'fútbol']))
+  })
+
+  it('includes deep-B1 advice and reported speech in placement and test-out banks', () => {
+    const placeB1 = itemsForLevel(placementItems, 'B1')
+    const outB1 = itemsForLevel(testOutItems, 'B1')
+    expect(placeB1.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['Deberías descansar', 'Dijo que llegaría tarde']),
+    )
+    expect(outB1.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['te recomiendo', 'por eso', 'equipaje']),
+    )
   })
 })
 
