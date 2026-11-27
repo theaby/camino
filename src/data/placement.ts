@@ -35,6 +35,11 @@ export const placementItems: CheckItem[] = [
   { id: 'place-c1-3', level: 'C1', prompt: 'however', promptLang: 'en', options: ['sin embargo', 'por lo tanto', 'a menos que', 'cuyo'], answer: 'sin embargo' },
   { id: 'place-c1-4', level: 'C1', prompt: 'provided that', promptLang: 'en', options: ['con tal de que', 'por más que', 'es decir', 'cuyo'], answer: 'con tal de que' },
   { id: 'place-c1-5', level: 'C1', prompt: 'as if he were an expert', options: ['como si fuera experto', 'como si es experto', 'como si será experto', 'como si fue experto ayer solo'], answer: 'como si fuera experto' },
+  { id: 'place-c2-1', level: 'C2', prompt: 'one might say', promptLang: 'en', options: ['cabría decir', 'sin lugar a dudas', 'meter la pata', 'de golpe'], answer: 'cabría decir' },
+  { id: 'place-c2-2', level: 'C2', prompt: 'to hit the nail on the head', options: ['dar en el clavo', 'meter la pata', 'tomar el pelo', 'no pegar ojo'], answer: 'dar en el clavo' },
+  { id: 'place-c2-3', level: 'C2', prompt: 'which (referring to a whole clause)', promptLang: 'en', options: ['lo cual', 'cuyo', 'quien', 'donde'], answer: 'lo cual' },
+  { id: 'place-c2-4', level: 'C2', prompt: 'It seems that the plan works', options: ['Parece ser que el plan funciona', 'Parece ser que el plan funcionó ayer solo', 'Sin lugar a dudas el plan nunca', 'Meter la pata el plan'], answer: 'Parece ser que el plan funciona' },
+  { id: 'place-c2-5', level: 'C2', prompt: 'to qualify / nuance a claim', options: ['matizar', 'meter la pata', 'tomar el pelo', 'echar de menos'], answer: 'matizar' },
 ]
 
 export const testOutItems: CheckItem[] = [
@@ -74,6 +79,13 @@ export const testOutItems: CheckItem[] = [
   { id: 'out-c1-5', level: 'C1', prompt: 'no matter how much', options: ['por más que', 'por lo tanto', 'es decir', 'cuyo'], answer: 'por más que' },
   { id: 'out-c1-6', level: 'C1', prompt: 'consequently', options: ['por consiguiente', 'por más que', 'cuyo', 'ojalá'], answer: 'por consiguiente' },
   { id: 'out-c1-7', level: 'C1', prompt: 'I wanted you to come', options: ['Quería que vinieras', 'Quería que vienes', 'Quiero que vinieras ayer solo', 'Sé que vinieras'], answer: 'Quería que vinieras' },
+  { id: 'out-c2-1', level: 'C2', prompt: 'cohesion', options: ['cohesión', 'errata', 'falacia', 'acta'], answer: 'cohesión' },
+  { id: 'out-c2-2', level: 'C2', prompt: 'to a certain extent', options: ['en cierta medida', 'sin lugar a dudas', 'de golpe', 'en absoluto'], answer: 'en cierta medida' },
+  { id: 'out-c2-3', level: 'C2', prompt: 'abstract / summary (academic)', options: ['resumen', 'errata', 'falacia', 'nubes'], answer: 'resumen' },
+  { id: 'out-c2-4', level: 'C2', prompt: 'passive voice', options: ['voz pasiva', 'tomar el pelo', 'de golpe', 'meter la pata'], answer: 'voz pasiva' },
+  { id: 'out-c2-5', level: 'C2', prompt: 'without a doubt', options: ['sin lugar a dudas', 'en absoluto', 'a regañadientes', 'de golpe'], answer: 'sin lugar a dudas' },
+  { id: 'out-c2-6', level: 'C2', prompt: 'bias', options: ['sesgo', 'errata', 'acta', 'anexo'], answer: 'sesgo' },
+  { id: 'out-c2-7', level: 'C2', prompt: 'will have done (fut. perfecto)', options: ['habrá hecho', 'hizo ayer solo', 'hace siempre', 'haga nunca'], answer: 'habrá hecho' },
 ]
 
 export function correctCount(items: readonly CheckItem[], answers: Record<string, string>): number {
@@ -94,12 +106,12 @@ export function levelCleared(level: CefrLevel, answers: Record<string, string>, 
   return quizCleared(itemsForLevel(items, level), answers)
 }
 
-/** First level the learner has not cleared. Passing C1 still starts at C1. */
+/** First level the learner has not cleared. Passing C2 still starts at C2. */
 export function startingLevel(answers: Record<string, string>, items: readonly CheckItem[] = placementItems): CefrLevel {
   for (const level of CEFR_LEVELS) {
     if (!levelCleared(level, answers, items)) return level
   }
-  return 'C1'
+  return 'C2'
 }
 
 export function levelsBefore(level: CefrLevel): CefrLevel[] {

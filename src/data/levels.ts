@@ -8,6 +8,7 @@ import { b2DeepUnits, b2DeepVocab } from './b2-deep'
 import { b2Units, b2Vocab } from './b2'
 import { c1DeepUnits, c1DeepVocab } from './c1-deep'
 import { c1Units, c1Vocab } from './c1'
+import { c2Units, c2Vocab } from './c2'
 import { course as starterUnits, vocab as starterVocab } from './course'
 import type { Level, Vocab } from './types'
 
@@ -23,6 +24,7 @@ export const vocab: Vocab[] = [
   ...b2DeepVocab,
   ...c1Vocab,
   ...c1DeepVocab,
+  ...c2Vocab,
 ]
 
 export const levels: Level[] = [
@@ -60,5 +62,12 @@ export const levels: Level[] = [
     canDo:
       'Concession and condition beyond aunque/si, imperfect subjunctive triggers, register pairs, advanced connectors, and denser arguments.',
     units: [...c1Units, ...c1DeepUnits],
+  },
+  {
+    id: 'C2',
+    title: 'C2 · Mastery',
+    canDo:
+      'Textual cohesion and style, idioms, abstract debate, professional and academic genres, irony and hedging, upper-band grammar and functions, and precision editing.',
+    units: [...c2Units],
   },
 ]

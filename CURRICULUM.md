@@ -2,7 +2,7 @@
 
 This is the course map for Camino, published at <https://theaby.github.io/camino/>.
 
-Camino’s path follows the CEFR bands A1–C1. Topic labels come from the Instituto Cervantes *Plan curricular* (PCIC), using the public index at [cvc.cervantes.es](https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm). Section numbers below are that index’s numbers: grammar is inventory 2, functions are inventory 5, general notions are inventory 8, and specific notions are inventory 9.
+Camino’s path follows the CEFR bands A1–C2. Topic labels come from the Instituto Cervantes *Plan curricular* (PCIC), using the public index at [cvc.cervantes.es](https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm). Section numbers below are that index’s numbers: grammar is inventory 2, functions are inventory 5, general notions are inventory 8, and specific notions are inventory 9.
 
 ## How the mapping was done
 
@@ -10,7 +10,7 @@ PCIC does not publish five separate inventories. It publishes three bands — A1
 
 The course uses a neutral standard: *tú* for one person, and *ustedes* for you-all. When a form belongs mainly to Spain or mainly to the Americas, the lesson names it. It does not mix the two without a note. Examples already in the lessons: *el billete* and *el boleto*; *vosotros* beside *ustedes*; the present perfect for “today” in Spain and the preterite for the same idea in much of Latin America.
 
-Reading and listening use a DELE-style question where a short text can carry it: a sign, a message, or a notice at A1–A2, and a specific detail, a plan, or a claim at B1–C1. Other exercises stay translation, matching, and conjugation. Task labels such as “Lectura · Cartel” mark the DELE-style items.
+Reading and listening use a DELE-style question where a short text can carry it: a sign, a message, or a notice at A1–A2, and a specific detail, a plan, a claim, or a stance at B1–C2. Other exercises stay translation, matching, and conjugation. Task labels such as “Lectura · Cartel” mark the DELE-style items.
 
 Typed Spanish that leaves an accent out still counts. The lesson flags it and shows the usual spelling. *ñ* is a different letter from *n*, so *ano* does not count for *año*.
 
@@ -103,6 +103,20 @@ The original twelve lessons stay first, with the same ids.
 | Advanced connectors | Consequently; Even so; Build the move; Connectors in a long argument | Function 5.6: *por consiguiente*, *en efecto*, *vale decir*, *ahora bien*, *con todo*, *dicho esto*, *en última instancia*, *cabe señalar*. |
 | Longer arguments | Remote work, revisited; A conditional project pitch; Argue in two registers; Held-out C1 practice | Denser argument macros with concession, condition, register, and advanced connectors; held-out C1 mix. |
 
+## C2
+
+| Unit | Lessons | PCIC topics taught here |
+| --- | --- | --- |
+| Textual cohesion and style | Pointing back; Thematic progression; Style and register; Cohesion in a text | Cohesion devices (*este último*, *lo cual*, *dicho*), progresión temática, elipsis, reformulación, estilo / registro / tono. Lectura · Estilo. |
+| Idioms and fixed expressions | Everyday idioms; Cost, mistakes, and frustration; Fixed stance phrases; Idioms in a story | Fixed expressions: *echar de menos*, *dar en el clavo*, *meter la pata*, *estar hasta las narices*, *a regañadientes*, *en absoluto*, *sin lugar a dudas*. Lectura · Narración. |
+| Abstract debate | Take a stance; Refute and qualify; Abstract notions; A dense argument | Functions 5.x argumentar / matizar: *postura*, *planteamiento*, *rebatir*, *falacia*, *sesgo*; notions *ética*, *autonomía*, *equidad*, *sostenibilidad*, *paradigma*. Lectura · Debate; Audición · Argumento. |
+| Professional and academic genres | The academic abstract; Reports and minutes; Letters and talks; Genre control | Géneros 7: *resumen*, *informe*, *acta*, *carta de motivación*, *ponencia*, *bibliografía*, *metodología*, *hallazgo*, *anexo*. Lectura · Resumen / Carta. |
+| Irony and hedging | Softening forms; More hedges; Irony and understatement; Hedges in a paragraph | Attenuation and stance: *cabría decir*, *parece ser que*, *en cierta medida*, *por así decirlo*, *no deja de ser*, *digamos*, *supuestamente*, *con matices*; *ironía*. Lectura · Ironía. |
+| Upper-band grammar | Nominalization and subordination; Passive and impersonal se; Aspectual periphrases; Light future perfect and rare forms | Grammar densification: *nominalización*, *subordinación*, *se impersonal*, *voz pasiva*; perífrasis (*dejar de*, *volver a*, *llegar a*, *ponerse a*, *venir a ser*); light *futuro perfecto* (*habrá hecho*) and rare *hubiere* as recognition. Lectura · Gramática. |
+| Mastery functions | Qualify a claim; Reformulate with precision; Evaluate critically; Negotiate meaning | Functions 5.x matizar, reformular, evaluar, negociar el sentido: *ambigüedad*, *concisión*, *claridad*, *coherencia*. |
+| Precision editing | Fix the register; Fix cohesion breaks; Fix hedge and irony clarity; Edit a paragraph | Production control: *redacción*, *revisión*, *errata*, *precisión*; edit chatty claims into precise prose. Lectura · Revisión. |
+| C2 synthesis | Style plus idiom; Academic hedge; Abstract debate input; Held-out C2 practice | Mixed C2 can-dos across style, idiom, genre, hedge, debate, and editing; held-out C2 mix. |
+
 ## What this course does not cover
 
 These PCIC areas are real, and this path does not teach them as inventories:
@@ -111,8 +125,8 @@ These PCIC areas are real, and this path does not teach them as inventories:
 - Orthography beyond the accent flag and *ñ* (inventory 4): punctuation rules, the diaeresis, abbreviations.
 - Relative clauses before B2. B2 now deepens *cuyo* agreement and free relatives (*lo que*, *el que*, *quienes*). The imperfect and pluperfect subjunctive appear in C1 conditionals and in past-trigger environments (*quería que*, *como si*). A2 covers the imperative (grammar 9.3), indirect-object pronouns as a set, and an intro to double clitics.
 - Pretérito anterior and futuro perfecto (grammar 9.1.7 and 9.1.9), which the inventory lists and everyday speech rarely needs.
-- C2, and the C1–C2 half of the upper band.
-- Many specific-notion lists beyond the A1–A2 samples. A1 covers house/rooms, body and basic health, clothes, shopping basics, numbers to 100, phone/address, months/seasons, weather, and *hay*. A2 adds leisure/sports, school and work routines, and shopping dialogues — still not every lemma on the PCIC lists. B2–C1 deepen grammar, discourse, and longer input more than specific-notion lists.
+- Full timed DELE C2 papers and sustained live conversation hours (oral fluency still needs external practice). C2 in Camino covers cohesion, idioms, abstract debate, professional/academic genres, irony/hedging, upper-band grammar/functions, and precision editing — not native-like improvisation under exam timing.
+- Many specific-notion lists beyond the A1–A2 samples. A1 covers house/rooms, body and basic health, clothes, shopping basics, numbers to 100, phone/address, months/seasons, weather, and *hay*. A2 adds leisure/sports, school and work routines, and shopping dialogues — still not every lemma on the PCIC lists. B2–C2 deepen grammar, discourse, genres, and longer input more than specific-notion lists.
 - Cultural referents (inventory 10), sociocultural behavior (11), intercultural skills (12), and learning procedures (13).
 - *Voseo*. The course does not teach it and does not mark it in an exercise. The plural note is only *ustedes* and *vosotros*.
 - A full DELE paper. The labeled tasks copy the format (a short text, one right answer, three distractors, a question about a fact or a claim). They are not timed exams and they are not official DELE items.

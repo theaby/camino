@@ -32,10 +32,11 @@ describe('placement', () => {
     expect(startingLevel(answersFor((level) => level === 'C1'))).toBe('A1')
   })
 
-  it('starts B1 after A1 and A2, and C1 after every earlier level', () => {
+  it('starts B1 after A1 and A2, and C2 after every earlier level', () => {
     expect(startingLevel(answersFor((level) => level === 'A1' || level === 'A2'))).toBe('B1')
-    expect(startingLevel(answersFor((level) => level !== 'C1'))).toBe('C1')
-    expect(startingLevel(answersFor(() => true))).toBe('C1')
+    expect(startingLevel(answersFor((level) => level !== 'C1' && level !== 'C2'))).toBe('C1')
+    expect(startingLevel(answersFor((level) => level !== 'C2'))).toBe('C2')
+    expect(startingLevel(answersFor(() => true))).toBe('C2')
   })
 
   it('needs at least two thirds to test out of a level', () => {
@@ -95,6 +96,17 @@ describe('placement', () => {
     )
     expect(outC1.map((item) => item.answer)).toEqual(
       expect.arrayContaining(['por más que', 'por consiguiente', 'Quería que vinieras']),
+    )
+  })
+
+  it('includes C2 cohesion, hedge, idiom, and genre items in placement and test-out banks', () => {
+    const placeC2 = itemsForLevel(placementItems, 'C2')
+    const outC2 = itemsForLevel(testOutItems, 'C2')
+    expect(placeC2.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['cabría decir', 'dar en el clavo', 'lo cual', 'matizar']),
+    )
+    expect(outC2.map((item) => item.answer)).toEqual(
+      expect.arrayContaining(['cohesión', 'en cierta medida', 'resumen', 'habrá hecho']),
     )
   })
 })
