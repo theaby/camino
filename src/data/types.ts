@@ -125,6 +125,8 @@ export type Lesson = {
   title: string
   summary: string
   exercises: Exercise[]
+  /** Countdown for timed DELE-style mocks. Omit for normal lessons. */
+  timedSeconds?: number
 }
 
 export type Unit = {
@@ -133,4 +135,9 @@ export type Unit = {
   description: string
   accent: string
   lessons: Lesson[]
+  /**
+   * Optional units do not block the required unlock chain or level completion.
+   * They unlock after the previous required lesson and stay skippable.
+   */
+  optional?: boolean
 }

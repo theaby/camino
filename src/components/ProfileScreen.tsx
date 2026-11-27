@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { allLessons } from '../data/catalog'
+import { requiredLessons } from '../data/catalog'
 import type { SyncState } from '../lib/useSyncedProgress'
 import { dailyXpOn, DAILY_GOAL, dueVocabIds, type Progress } from '../lib/progress'
 import { navigate } from '../lib/route'
@@ -23,7 +23,8 @@ type Props = {
 export function ProfileScreen({ progress, today, configured, email, syncState, onToggleSound, onReset, onSignOut }: Props) {
   const [confirming, setConfirming] = useState(false)
   const [install, setInstall] = useState<InstallPrompt | null>(null)
-  const lessons = allLessons().length
+  const required = requiredLessons()
+  const cleared = required.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
   const due = dueVocabIds(progress, today).length
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export function ProfileScreen({ progress, today, configured, email, syncState, o
       <div className="stats">
         <Stat label="Streak" value={progress.streak === 1 ? '1 day' : `${progress.streak} days`} />
         <Stat label="XP" value={String(progress.xp)} />
-        <Stat label="Lessons" value={`${progress.completedLessons.length}/${lessons}`} />
+        <Stat label="Lessons" value={`${cleared}/${required.length}`} />
         <Stat label="Due" value={String(due)} />
       </div>
       <section className="panel-card">

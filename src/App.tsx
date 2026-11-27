@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { getRedirectResult, onAuthStateChanged, signOut, type User } from 'firebase/auth'
-import { isLessonUnlocked, lessonById, lessonIdsBefore, lessonsInLevel, vocab, vocabForIds } from './data/catalog'
+import { isLessonUnlocked, lessonById, lessonIdsBefore, requiredLessonsInLevel, vocab, vocabForIds } from './data/catalog'
 import { AccountScreen } from './components/AccountScreen'
 import { LevelQuiz } from './components/LevelQuiz'
 import { PathScreen } from './components/PathScreen'
@@ -254,12 +254,14 @@ function LessonRoute({
       </section>
     )
   }
+  const timed = typeof lesson.timedSeconds === 'number' && lesson.timedSeconds > 0 ? lesson.timedSeconds : undefined
   return (
     <Session
       key={`${lesson.id}-${attempt}`}
       title={lesson.title}
       exercises={lesson.exercises}
-      heartsEnabled
+      heartsEnabled={!timed}
+      timedSeconds={timed}
       sound={progress.sound}
       preview={(summary) => {
         const next = applyLessonResult(progress, lesson.id, summary, todayISO())
@@ -318,7 +320,7 @@ function TestOut({ level, onPass, onCancel }: { level: string; onPass: (ids: str
       }}
       confirmLabel="Back to the path"
       onConfirm={(answers) => {
-        if (quizCleared(items, answers)) onPass(lessonsInLevel(known as CefrLevel).map((lesson) => lesson.id))
+        if (quizCleared(items, answers)) onPass(requiredLessonsInLevel(known as CefrLevel).map((lesson) => lesson.id))
         else onCancel()
       }}
       onCancel={onCancel}

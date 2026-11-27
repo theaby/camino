@@ -2,7 +2,7 @@
 
 This is the course map for Camino, published at <https://theaby.github.io/camino/>.
 
-Camino’s path follows the CEFR bands A1–C2. Topic labels come from the Instituto Cervantes *Plan curricular* (PCIC), using the public index at [cvc.cervantes.es](https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm). Section numbers below are that index’s numbers: grammar is inventory 2, functions are inventory 5, general notions are inventory 8, and specific notions are inventory 9.
+Camino’s path follows the CEFR bands A1–C2. Topic labels come from the Instituto Cervantes *Plan curricular* (PCIC), using the public index at [cvc.cervantes.es](https://cvc.cervantes.es/ensenanza/biblioteca_ele/plan_curricular/indice.htm). Section numbers below are that index’s numbers: grammar is inventory 2, functions are inventory 5, general notions are inventory 8, and specific notions are inventory 9. Optional polish units (pronunciation, culture, voseo, timed DELE mocks) appear on the path with an **Optional** label; they do not block Continue or level completion.
 
 ## How the mapping was done
 
@@ -116,19 +116,30 @@ The original twelve lessons stay first, with the same ids.
 | Mastery functions | Qualify a claim; Reformulate with precision; Evaluate critically; Negotiate meaning | Functions 5.x matizar, reformular, evaluar, negociar el sentido: *ambigüedad*, *concisión*, *claridad*, *coherencia*. |
 | Precision editing | Fix the register; Fix cohesion breaks; Fix hedge and irony clarity; Edit a paragraph | Production control: *redacción*, *revisión*, *errata*, *precisión*; edit chatty claims into precise prose. Lectura · Revisión. |
 | C2 synthesis | Style plus idiom; Academic hedge; Abstract debate input; Held-out C2 practice | Mixed C2 can-dos across style, idiom, genre, hedge, debate, and editing; held-out C2 mix. |
+| Timed DELE C2 mock *(optional)* | C2 reading paper; C2 listening paper | Timed full-paper style Lectura / Audición under a clock. Not an official DELE. |
+
+## Optional polish (Phase 6)
+
+These units are on the path with an **Optional** badge. Skipping them does not block the next required lesson or level completion. Placement and test-out only grant required lesson ids.
+
+| Level | Unit | Lessons | PCIC / product note |
+| --- | --- | --- | --- |
+| A1 | Sounds and stress | Pero and perro; N and ñ, s and z; Stress that changes meaning | Light inventory 3 drills: minimal pairs and written stress. |
+| A2 | Culture notes | Meals and the square; Festivals and celebrations | Inventory 10 cultural referents (tapas, plaza, Día de Muertos, Semana Santa, quinceañera, mate). |
+| A2 | Voseo awareness | Vos, sos, tenés; Where you hear vos | Named awareness unit only. Path register stays *tú* / *ustedes*. |
+| B1 | Sociocultural habits | How you address people; Time, turns, and tips | Inventory 11: trato, tuteo/usted, greetings, quedar, puntualidad, propina. |
+| B1–C2 | Timed DELE mocks | Reading paper + listening paper per band | Product timer on the lesson; a few mock sets for stamina. Format practice only — not official papers. |
 
 ## What this course does not cover
 
-These PCIC areas are real, and this path does not teach them as inventories:
+These PCIC areas are real, and this path does not teach them as full inventories:
 
-- Pronunciation and prosody (inventory 3). Listening uses speech synthesis. There is no sound drill.
 - Orthography beyond the accent flag and *ñ* (inventory 4): punctuation rules, the diaeresis, abbreviations.
 - Relative clauses before B2. B2 now deepens *cuyo* agreement and free relatives (*lo que*, *el que*, *quienes*). The imperfect and pluperfect subjunctive appear in C1 conditionals and in past-trigger environments (*quería que*, *como si*). A2 covers the imperative (grammar 9.3), indirect-object pronouns as a set, and an intro to double clitics.
-- Pretérito anterior and futuro perfecto (grammar 9.1.7 and 9.1.9), which the inventory lists and everyday speech rarely needs.
-- Full timed DELE C2 papers and sustained live conversation hours (oral fluency still needs external practice). C2 in Camino covers cohesion, idioms, abstract debate, professional/academic genres, irony/hedging, upper-band grammar/functions, and precision editing — not native-like improvisation under exam timing.
+- Pretérito anterior (grammar 9.1.7). Futuro perfecto appears lightly in C2 recognition.
+- Sustained live conversation hours (oral fluency still needs external practice). Timed mocks train clock stamina for reading/listening format items only; they are not official DELE papers and do not include human-rated production.
 - Many specific-notion lists beyond the A1–A2 samples. A1 covers house/rooms, body and basic health, clothes, shopping basics, numbers to 100, phone/address, months/seasons, weather, and *hay*. A2 adds leisure/sports, school and work routines, and shopping dialogues — still not every lemma on the PCIC lists. B2–C2 deepen grammar, discourse, genres, and longer input more than specific-notion lists.
-- Cultural referents (inventory 10), sociocultural behavior (11), intercultural skills (12), and learning procedures (13).
-- *Voseo*. The course does not teach it and does not mark it in an exercise. The plural note is only *ustedes* and *vosotros*.
-- A full DELE paper. The labeled tasks copy the format (a short text, one right answer, three distractors, a question about a fact or a claim). They are not timed exams and they are not official DELE items.
+- Intercultural skills (inventory 12) and learning procedures (13) as dedicated courses. Culture (10) and sociocultural (11) appear as optional units only.
+- Productive *voseo*. The optional **Voseo awareness** unit teaches recognition; Camino still practices *tú* / *ustedes*, with *vosotros* named for Spain.
 
-Placement and test-out only mark lessons complete. They do not add XP.
+Placement and test-out only mark required lessons complete. They do not add XP.
