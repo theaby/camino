@@ -116,7 +116,13 @@ button.brand { padding: 0; }
   letter-spacing: 0.02em;
 }
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
-.mark { width: 32px; height: 32px; flex: none; }
+.mark {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .flame { width: 18px; height: 18px; }
 .pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .pill {
@@ -343,6 +349,43 @@ button.pill { cursor: pointer; }
   margin: 16px 0 0;
 }
 .aside-en { margin: 0 0 12px; color: var(--ink-soft); }
+
+.path-companion {
+  pointer-events: none;
+  user-select: none;
+}
+.path-companion-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  transform-origin: 70% 40%;
+  animation: companion-idle 3.2s ease-in-out infinite;
+}
+.path-companion[data-mood="celebrate"] .path-companion-img {
+  animation: companion-celebrate 1.4s ease-out;
+}
+.path-companion-mobile {
+  width: 88px;
+  margin: 12px auto 0;
+}
+.path-companion-aside {
+  width: min(148px, 70%);
+  margin: 0 auto 14px;
+}
+@keyframes companion-idle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  35% { transform: rotate(-5deg) translateY(0); }
+  50% { transform: rotate(4deg) translateY(-2px); }
+  65% { transform: rotate(-2deg) translateY(0); }
+}
+@keyframes companion-celebrate {
+  0% { transform: scale(1) rotate(0deg) translateY(0); }
+  18% { transform: scale(1.08) rotate(-10deg) translateY(-8px); }
+  36% { transform: scale(1.06) rotate(12deg) translateY(-12px); }
+  54% { transform: scale(1.08) rotate(-8deg) translateY(-6px); }
+  100% { transform: scale(1) rotate(0deg) translateY(0); }
+}
 
 .stats {
   display: grid;
@@ -628,6 +671,7 @@ button.pill { cursor: pointer; }
     border-radius: 18px;
     padding: 16px;
   }
+  .path-companion-mobile { display: none; }
   .due-banner { display: none; }
 }
 

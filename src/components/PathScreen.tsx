@@ -3,14 +3,17 @@ import { isLessonUnlocked, levels, nextIncomplete, requiredLessons } from '../da
 import { DAILY_GOAL, dailyXpOn, dueVocabIds, type Progress } from '../lib/progress'
 import { navigate } from '../lib/route'
 import { CheckIcon, LockIcon } from './Icons'
+import { PathCompanion } from './PathCompanion'
 
 type Props = {
   progress: Progress
   today: string
+  companionMood: 'idle' | 'celebrate'
+  onCompanionIdle: () => void
   onDismissWelcome: () => void
 }
 
-export function PathScreen({ progress, today, onDismissWelcome }: Props) {
+export function PathScreen({ progress, today, companionMood, onCompanionIdle, onDismissWelcome }: Props) {
   const required = requiredLessons()
   const next = nextIncomplete(progress.completedLessons)
   const done = required.filter((lesson) => progress.completedLessons.includes(lesson.id)).length
@@ -56,6 +59,8 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
               </div>
             </div>
           </section>
+
+          <PathCompanion className="path-companion-mobile" mood={companionMood} onCelebrateEnd={onCompanionIdle} />
 
           {progress.welcomed ? null : (
             <section className="welcome">
@@ -160,6 +165,7 @@ export function PathScreen({ progress, today, onDismissWelcome }: Props) {
         </div>
 
         <aside className="path-aside">
+          <PathCompanion className="path-companion-aside" mood={companionMood} />
           <h2>On this path</h2>
           <ul>
             <li>Listen, then read the phrase.</li>

@@ -37,6 +37,7 @@ export function App() {
   const [route, setRoute] = useState<Route>(() => readRoute())
   const [attempt, setAttempt] = useState(0)
   const [reviewRun, setReviewRun] = useState<ReturnType<typeof buildReviewExercises> | null>(null)
+  const [companionMood, setCompanionMood] = useState<'idle' | 'celebrate'>('idle')
 
   useEffect(() => {
     const sync = () => setRoute(readRoute())
@@ -112,6 +113,8 @@ export function App() {
                 <PathScreen
                   progress={progress}
                   today={today}
+                  companionMood={companionMood}
+                  onCompanionIdle={() => setCompanionMood('idle')}
                   onDismissWelcome={() => setProgress((current) => ({ ...current, welcomed: true }))}
                 />
               ) : null}
@@ -193,7 +196,13 @@ export function App() {
           progress={progress}
           onRetry={() => setAttempt((value) => value + 1)}
           onResult={(lessonId, summary) => {
-            setProgress((current) => applyLessonResult(current, lessonId, summary, todayISO()).state)
+            setProgress((current) => {
+              const next = applyLessonResult(current, lessonId, summary, todayISO())
+              if (summary.outcome === 'complete' || next.state.streak > current.streak) {
+                queueMicrotask(() => setCompanionMood('celebrate'))
+              }
+              return next.state
+            })
           }}
         />
       ) : null}
@@ -210,7 +219,11 @@ export function App() {
             return { xpGained: next.xpGained, streak: next.state.streak }
           }}
           onResult={(summary) => {
-            setProgress((current) => applyReviewResult(current, summary, todayISO()).state)
+            setProgress((current) => {
+              const next = applyReviewResult(current, summary, todayISO())
+              if (next.state.streak > current.streak) queueMicrotask(() => setCompanionMood('celebrate'))
+              return next.state
+            })
           }}
           onExit={() => setReviewRun(null)}
         />

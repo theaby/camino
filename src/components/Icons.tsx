@@ -1,13 +1,9 @@
 type IconProps = { className?: string }
 
+const MARK_SRC = `${import.meta.env.BASE_URL}brand/eagle-mark-64.png`
+
 export function MarkIcon({ className }: IconProps) {
-  return (
-    <svg className={className} viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="9" fill="#1F7A4D" />
-      <circle cx="16" cy="13" r="5" fill="#F0B429" />
-      <rect x="8" y="21" width="16" height="3.5" rx="1.75" fill="#F6F1E8" />
-    </svg>
-  )
+  return <img className={className} src={MARK_SRC} width={32} height={32} alt="" decoding="async" />
 }
 
 export function FlameIcon({ className }: IconProps) {
